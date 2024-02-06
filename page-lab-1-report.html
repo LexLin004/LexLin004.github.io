@@ -165,9 +165,6 @@
                                                 <a href="https://github.com/robotconstruction"><i class="fab fa-github fa-fw"></i></a>
                                             </div>
                                         </div>
-                                        
-                                        <img class="img-fluid mb-2 rounded" src="https://source.unsplash.com/vZJdYl5JVXY/990x540" />
-                                        <div class="small text-gray-500 text-center">Photo Credit: Unsplash</div>
                                         <div class="single-post-text my-5">
                                             <h3>Setup for Artemis board and UART communication</h3>
                                             <p>By installing the Arduino IDE ands Arduino Core for Apollo3 following the 
@@ -176,14 +173,38 @@
                                                 1593457111.Cj0KCQjwoub3BRC6ARIsABGhnyahkG7hU2v-0bSiAeprvZ7c9v0XEKYdVHIIi_
                                                 -J-m5YLdDBMc2P_goaAtA4EALw_wcB">setup instructions</a>, I was able to program 
                                                 and burn into the Artemis nano.</p>
-                                            <iframe width="270" height="480"
-                                            src="https://youtube.com/embed/ouwsdcDJQVo?feature=share">
-                                            </iframe>
+                                            
                                             <h3>Lab section</h3>
-                                            <p>In the first part of the experiment, we were asked to burn 
-                                                "Example: Blink it Up" to the board, and after burning it, 
-                                                we could see the built-in LEDs on the board blinking.</p>
-                                            <p>---------------- paragraph 4 ----------------</p>
+                                            <p>In the first part of the experiment, we were asked to burn "Example: Blink it Up" 
+                                                to the board, and after burning it, we could see the built-in LEDs on the board blinking.</p>
+                                            <iframe width="270" height="480" src="https://youtube.com/embed/ouwsdcDJQVo?feature=share"> </iframe>
+
+                                            <p> I then test the serial example. After burning it into the board, some sentences are printed out
+                                                to the serial monitor. And it echos my input by printing out it in the serial monitor, as shown in the video.</p>
+                                            <iframe width="450" height="450" src="https://youtube.com/embed/zoWw1BsZ7zQ?feature=share"> </iframe>
+
+                                            <p> I then tested the analogRead example. As you can see, the temperature readings are printed in the 
+                                                serial monitor in the format {temp, vcc/3, vss, time, temp_f}.
+                                                I modified the original serial.printf statement, which you can see in the top half of the video, 
+                                                to print the desired format. When I touch the chip, the values of temp, vcc/3, temp_f increase.
+                                            </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/S8sN5z130Ow?si=5jN3ySXMNYqGAfcc"> </iframe>
+
+                                            <p> In the PDM/MicrophoneOutput example, as shown in the video, when I whistle into the microphone,
+                                                the output in the serial monitor increases because my whistle has a higher frequency.
+                                            </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/qqty3SYghvI?si=Dnm5JOXtLxdbeKai"> </iframe>
+                                            
+                                            <p> In the last task of part1, I played this <a href="https://youtu.be/buimPG01gcs?feature=shared">video (Tuning Note: A)</a> on 
+                                                my computer. As shown in the video, in the serial output, the loudest frequency is fixed at 434 (Hz), and 'in range' is printed.
+                                                434Hz close to the frequency of the musical note "A"(440Hz). Also, the LED on the board lights up to show the microphone heard 'A'.
+                                                The code I added is shown in figure 1.
+                                                 Here is the <a href="https://github.com/LexLin004/robotcode/tree/main/SoundOfAWithLedLight">full code</a>.
+                                            </p>
+                                            <img class="img-fluid mb-2 rounded" width="560" src="assets/img/lab_assets/lab1_assets/lab1_part1_code_added_Mic.png" />
+                                            <div class="small text-gray-500 text-center">Figure 1: code added to PDM/MicrophoneOutput example</div>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/t6UJH3ME8GY?si=NOfFk77UcWlUVZlM"> </iframe>
+
                                             <h3>Setup for BLE communication</h3>
                                             <p>---------------- paragraph 3 ----------------</p>
                                             <p>---------------- paragraph 4 ----------------</p>
