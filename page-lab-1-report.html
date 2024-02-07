@@ -259,11 +259,11 @@
                                                 received data as shown in lab1_task4_loop_based_on_3.py. As shown in the video, the unit in the Python script started notifying RX_STRING 
                                                 for 3 seconds. During these 3 seconds, if the board sends RX_STRING, the script tries to extract the time from the timestamp string and 
                                                 store it in received_messages. Then, it calculated the total time of sending, the number of message that were sent, and the size of 
-                                                these messages. Finally, I got 36 messages in 1.981 second. Thus, the <b>effective data transfer rate</b> is <b>18.173 messages per second</b> 
-                                                and <b>366.939 bits per second</b>.</p>
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/rgmA3zYdhXg?si=qs7MWe2cZ7jAyQg4" ></iframe>
+                                                these messages. Finally, I got 19 messages in 0.615 second. Thus, the <b>effective data transfer rate</b> is <b>30.894 messages per second</b> 
+                                                and <b>1235.772 bits per second</b>.</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/HIRndUH_OYs?si=uI-Op0W09K9rjAdn" ></iframe>
                                                 <script src="https://gist.github.com/LexLin004/b16a67760de3ddb8718eb40c163beb62.js"></script>
-                                                <script src="https://gist.github.com/LexLin004/b404ced623f5de476e34a4f5fc0082b7.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/9db14066d0c08ef79215aa0ab3e723be.js"></script>
 
                                             <h5>Task 5</h5>
                                             <p>We were asked to write a program for the board to record a certain number of timestamps into an array and send this array to the computer 
@@ -306,12 +306,21 @@
                                                 Also this causes a delay between data collection and data transmission. This method is suitable for applications that 
                                                 value data throughput and where the board will experience scenarios with bursty data generation.
                                             </p>
+                                            <p>
+                                                According to output of task 5, the computer receive an array contains 400 messages in 12504-10001=2503ms=2.503seconds.
+                                                So, the second method can record data in the rate of 159.8 messages per second or 8949.261 bits per second.
+                                            </p>
+                                            <p>
+                                                In the time stamp array, each time stamp is about 7 bytes + 1 byte('\0') = 8bytes. Array overhead is 4 bytes(pointer size)
+                                                 * num of string. Approximately, each time stamp uses 12 bytes. So, 384kB of RAM can store 1024 * 384 / 12 = 32768 time stamps.
+                                            </p>
 
                                             <h5>Task 8</h5>
                                             <p>---------------- sss ----------------</p>
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
-                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
-                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+                                                <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab1_assets/lab1_task8.png" />
+                                                <div class="small text-gray-500 text-center">Figure 1: EDR vs. Reply Size via BLE</div>
+                                                <script src="https://gist.github.com/LexLin004/bcd61d063e2e35abb7b26a38fc27e69b.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/3a114e8b73267df2c6674095aabecffa.js"></script>
 
                                             <h5>Task 9</h5>
                                             <p>---------------- sss ----------------</p>
