@@ -254,7 +254,7 @@
                                             <h5>Task 4</h5>
                                             <p>We were asked to write a loop for the board to send timestamp messages to the computer. In the lab1_task4_loop_arduino.ino below is the 
                                                 loop that I added to the write_data() function. Because write_data() is called by loop(), this causes the board to send timestamp messages 
-                                                continuously between 10 and 20 seconds after power up. </p>
+                                                continuously between 10 and 20 seconds after connecting to the computer. </p>
                                             <p> I wrote a code in Python based on lab1_task3_handler_with_test.py to analyze the 
                                                 received data as shown in lab1_task4_loop_based_on_3.py. As shown in the video, the unit in the Python script started notifying RX_STRING 
                                                 for 3 seconds. During these 3 seconds, if the board sends RX_STRING, the script tries to extract the time from the timestamp string and 
@@ -266,13 +266,29 @@
                                                 <script src="https://gist.github.com/LexLin004/b404ced623f5de476e34a4f5fc0082b7.js"></script>
 
                                             <h5>Task 5</h5>
-                                            <p>---------------- sss ----------------</p>
+                                            <p>We were asked to write a program for the board to record a certain number of timestamps into an array and send this array to the computer 
+                                                when command SEND_TIME_DATA is received. lab1_task5_send_time_data_cmd_arduino.ino below contains the code added to the write_data() 
+                                                function and the SEND_TIME_DATA command added to handle_command(). Since loop() calls write_data(), this causes the board to record a 
+                                                timestamp between 10 and 20 seconds after connecting to the computer.</p>
+                                            <p>I wrote a code in Python to send the SEND_TIME_DATA command and print the received data as shown in lab1_task5_send_time_data_cmd_py.py. 
+                                                As shown in the video, the Python script sends the command and starts notifying RX_STRING for 60 seconds. During these 60 seconds, the 
+                                                board sends elements of the array, which the script accepts and stores in received_messages_about_time_array_ele. Finally we can see 
+                                                that the board shows 400 messages sent and the computer receives the same number of messages.</p>
                                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/11bgN-vM-0g?si=apgfeEX1RxKrJgEI" ></iframe>
                                                 <script src="https://gist.github.com/LexLin004/fe4633abe4a986d98a6a077e8789f8f4.js"></script>
                                                 <script src="https://gist.github.com/LexLin004/43c5c56457612c830e17ac18eadce6e7.js"></script>
 
                                             <h5>Task 6</h5>
-                                            <p>---------------- sss ----------------</p>
+                                            <p>We were asked to write a program for the board to record a certain number of synchronized temperature readings and timestamps to two 
+                                                arrays and send them to the computer when GET_TEMP_READINGS are received. The following 'lab1_task6_send_temp_data_cmd_arduino.ino' 
+                                                contains the code added to the write_data() function and the GET_TEMP_READINGS command added to the handle_command(). Since loop() 
+                                                calls write_data(), this causes the board to record temperature readings and timestamps between 10 and 20 seconds after connecting 
+                                                to the computer.</p>
+                                            <p>I wrote a code in Python to send the GET_TEMP_READINGS instruction and to accept the data and store it in the temperature and 
+                                                timestamp arrays, respectively, and print the received data, as 'lab1_task6_send_temp_data_cmd_ py.py' shown. As shown in the video, 
+                                                the Python script sends the command and starts notifying RX_STRING for 60 seconds. During these 60 seconds, the board sends the 
+                                                elements of the array and the script receives, processes, and stores the data. We can see that the board shows 400 messages sent 
+                                                and the computer receives the same number of messages.</p>
                                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/Nxga0GhFK3o?si=MDgblAf7MjtOC61g" ></iframe>
                                                 <script src="https://gist.github.com/LexLin004/38c40453585df98762698f932355c486.js"></script>
                                                 <script src="https://gist.github.com/LexLin004/e8c81cacb0d973cded80035b696a5358.js"></script>
