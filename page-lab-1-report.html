@@ -146,11 +146,12 @@
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
                                         <h1>Lab 1 report</h1>
-                                        <p class="lead">In this lab, I set up the development environment for the Artemis board and 
-                                            used serial communication between the computer and the board to send or receive information 
-                                            from the LED, temperature sensor, and microphone. I then used BLE to establish communication 
-                                            between them. I modified Artemis's code for processing sensor data and sending it to the 
-                                            computer, as well as the Python code on the computer for it to communicate to Artemis.</p>
+                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab1_new.html">lab </a>,
+                                            I set up the development environment for the Artemis board and used serial communication between the
+                                            computer and the board to send or receive information from the LED, temperature sensor, and microphone.
+                                            I then used BLE to establish communication between them. I modified Artemis's code for processing sensor 
+                                            data and sending it to the computer, as well as the Python code on the computer for it to communicate to 
+                                            Artemis.</p>
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
@@ -166,53 +167,126 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
+                                            <h2>Part 1</h2>
                                             <h3>Setup for Artemis board and UART communication</h3>
                                             <p>By installing the Arduino IDE ands Arduino Core for Apollo3 following the 
-                                                <a href="https://learn.sparkfun.com/tutorials/artemis-development-with-arduino?
-                                                _ga=2.30055167.1151850962.1594648676-1889762036.1574524297&_gac=1.19903818.
-                                                1593457111.Cj0KCQjwoub3BRC6ARIsABGhnyahkG7hU2v-0bSiAeprvZ7c9v0XEKYdVHIIi_
-                                                -J-m5YLdDBMc2P_goaAtA4EALw_wcB">setup instructions</a>, I was able to program 
-                                                and burn into the Artemis nano.</p>
+                                                <a href="https://learn.sparkfun.com/tutorials/artemis-development-with-arduino?_ga=2.30055167.
+                                                1151850962.1594648676-1889762036.1574524297&_gac=1.19903818.1593457111.Cj0KCQjwoub3BRC6ARIs
+                                                ABGhnyahkG7hU2v-0bSiAeprvZ7c9v0XEKYdVHIIi_-J-m5YLdDBMc2P_goaAtA4EALw_wcB">setup instructions</a>, 
+                                                I was able to program and burn into the Artemis nano.</p>
                                             
                                             <h3>Lab section</h3>
-                                            <p>In the first part of the experiment, we were asked to burn "Example: Blink it Up" 
-                                                to the board, and after burning it, we could see the built-in LEDs on the board blinking.</p>
+                                            <h5>Task 1</h5>
+                                            <p> We were asked to connect the board to computer and burn "Example: Blink it Up"  to 
+                                                the board, and after burning it,  we could see the built-in LEDs on the board blinking.</p>
                                             <iframe width="270" height="480" src="https://youtube.com/embed/ouwsdcDJQVo?feature=share"> </iframe>
-
-                                            <p> I then test the serial example. After burning it into the board, some sentences are printed out
-                                                to the serial monitor. And it echos my input by printing out it in the serial monitor, as shown in the video.</p>
+                                            <h5>Task 2</h5>
+                                            <p> We were asked to test the serial example. After burning it into the board, some sentences are printed 
+                                                out to the serial monitor. And it echos my input by printing out it in the serial monitor, as shown 
+                                                in the video.</p>
                                             <iframe width="450" height="450" src="https://youtube.com/embed/zoWw1BsZ7zQ?feature=share"> </iframe>
-
-                                            <p> I then tested the analogRead example. As you can see, the temperature readings are printed in the 
-                                                serial monitor in the format {temp, vcc/3, vss, time, temp_f}.
-                                                I modified the original serial.printf statement, which you can see in the top half of the video, 
-                                                to print the desired format. When I touch the chip, the values of temp, vcc/3, temp_f increase.
+                                            <h5>Task 3</h5>
+                                            <p> We were asked to test the analogRead example. As shown in the video, the temperature readings are 
+                                                printed to the serial monitor in the format {temp, vcc/3, vss, time, temp_f}. I modified the 
+                                                original 'serial.printf' statement, which you can see in the top half of the video, to print the 
+                                                desired format. When I touch the chip, the values of temp, vcc/3, temp_f increase.
                                             </p>
                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/S8sN5z130Ow?si=5jN3ySXMNYqGAfcc"> </iframe>
-
-                                            <p> In the PDM/MicrophoneOutput example, as shown in the video, when I whistle into the microphone,
-                                                the output in the serial monitor increases because my whistle has a higher frequency.
+                                            <h5>Task 4</h5>
+                                            <p> We were asked to test PDM/MicrophoneOutput example, We were asked to test the PDM/MicrophoneOutput example 
+                                                and as shown in the video, the highest frequency was printed to the serial monitor. 
+                                                When I whistled into the microphone, the output in the serial monitor increased because 
+                                                the whistle frequency was higher than the frequency of the ambient noise.
                                             </p>
                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/qqty3SYghvI?si=Dnm5JOXtLxdbeKai"> </iframe>
-                                            
-                                            <p> In the last task of part1, I played this <a href="https://youtu.be/buimPG01gcs?feature=shared">video (Tuning Note: A)</a> on 
-                                                my computer. As shown in the video, in the serial output, the loudest frequency is fixed at 434 (Hz), and 'in range' is printed.
-                                                434Hz close to the frequency of the musical note "A"(440Hz). Also, the LED on the board lights up to show the microphone heard 'A'.
-                                                The code I added is shown in figure 1.
-                                                 Here is the <a href="https://github.com/LexLin004/robotcode/tree/main/SoundOfAWithLedLight">full code</a>.
+                                            <h5>Task 5</h5>
+                                            <p> We are asked to program the board to light up the LED on board when playing musical "A" note. 
+                                                I added following code in the loop function: 
+                                                <script src="https://gist.github.com/LexLin004/d71f8c79b712022ef4988cab55c5726e.js"></script>.
+                                                After burning it to the board, I played this <a href="https://youtu.be/buimPG01gcs?feature=shared">
+                                                video </a> on my computer. As shown in the video, in the serial output, the loudest frequency is fixed 
+                                                at 434 (Hz), and 'in range' is printed. The 434Hz is close to the frequency of the musical note 
+                                                "A"(440Hz). Also, the LED on the board lights up to show the microphone heard 'A'. 
+                                                Here is the <a href="https://github.com/LexLin004/robotcode/tree/main/SoundOfAWithLedLight">full code</a>.
                                             </p>
-                                            <img class="img-fluid mb-2 rounded" width="560" src="assets/img/lab_assets/lab1_assets/lab1_part1_code_added_Mic.png" />
-                                            <div class="small text-gray-500 text-center">Figure 1: code added to PDM/MicrophoneOutput example</div>
                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/t6UJH3ME8GY?si=NOfFk77UcWlUVZlM"> </iframe>
-
+                                            
+                                            <h2>Part 2</h2>
                                             <h3>Setup for BLE communication</h3>
-                                            <p>Setup: Briefly describe the steps taken to set up your computer for Lab 2,
-                                                 showing any results (i.e. MAC address printing)</p>
-                                            <p>Codebase: Add a brief explanation of your understanding of the codebase 
-                                                and how Bluetooth works between your computer and the Artemis</p>
+                                            <p> By burning the ble_arduino.ino into the board, the MAC address 'c0:89:90:6d:d:4b' was printed out to the serial output, as shown in figure 1. 
+                                                By running uuid4() in python script, I can get a generated UUID '3f297411-561b-4f87-a592-c14a7c3c8112' for ble_service, as shown in figure 2.
+                                                Finally, I checked that the UUIDs used in the Arduino sketch are the same as those connection.yaml in python, and that the command types defined in 
+                                                "enum CommandTypes" in the Arduino sketch are the same as the command types defined in cmd_types.py.
+                                            </p>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab1_assets/MACaddrOfArtemis.png" />
+                                            <div class="small text-gray-500">Figure 1: MAC address of Artemis board</div>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab1_assets/UUIDgenerated.png" />
+                                            <div class="small text-gray-500">Figure 2: UUID for BLE service</div>
+                                            <p> The codebase includes Arduino and Python components. In the Arduino part, 'ble_arduino.ino' initialize BLE service, defining characteristics,
+                                                handling BLE events, and executing robot commands received over BLE.In the Python component, 'demo.ipynb' initializes the BLE connection,
+                                                connects to, and sends commands to and receives data back from the robot via BLE communication. Other files manage BLE operations, define 
+                                                command structures, and contain BLE connection parameters.</p>
+                                            <p> First, Artemis initializes the BLE service and advertises its presence. Then, the Python script discovers available BLE devices and recognizes 
+                                                the board. Once connected, the Python script can send commands and receive data from the board by writing or reading specific BLE characteristics. 
+                                                Artemis can also send data and receive data by updating or reading characteristics values.</p>
                                             <h3>Lab section</h3>
-                                            <p>---------------- paragraph 3 ----------------</p>
-                                            <p>---------------- paragraph 4 ----------------</p>
+
+                                            <h5>Task 1</h5>
+                                            <p> We were asked to write a ECHO command in ble_arduino.ino. As shown in video, when I sent ECHO command with string 'HiHello' from computer,
+                                                an augmented string 'Robot says -> HiHello :)' was sent from the board and was received by computer. </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/x8_CAQhwwWY?si=vQUQR_X5bxXUtpXz"> </iframe>
+                                            <script src="https://gist.github.com/LexLin004/50a811e58bf269a1cb99bc5ee177651f.js"></script>
+
+                                            <h5>Task 2</h5>
+                                            <p> We were asked to write a GET_TIME_MILLIS command in ble_arduino.ino. As shown in video, when I sent GET_TIME_MILLIS command from computer,
+                                                a time stamp string 'T:49603' was sent from the board and was received by computer. </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/XWgVS6jKnoY?si=1moTf1hG3kR-2YPs"> </iframe>
+                                            <script src="https://gist.github.com/LexLin004/e54b4e90aa3f729559bd9675489e63b4.js"></script>
+
+                                            <h5>Task 3</h5>
+                                            <p>We were asked to write a notification handler in Python to receive a string value from a board. The callback function extracts the time 
+                                                from the timestamp string. As shown in the video, the cell in the python script started notifying RX_STRING for 3 seconds. During these 
+                                                3 seconds, if the board sent RX_STRING, the script wound try to extract the time (i.e. 2473256) from the string (if in timestamp format) 
+                                                (i.e. T:2473256).</p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/FuGJWctgVjU?si=cUyFKZOYjq0kec8p"></iframe>
+                                            <script src="https://gist.github.com/LexLin004/bdf7d3d5c30e6126fddf2501dd73dda8.js"></script>
+
+                                            <h5>Task 4</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
+                                            <h5>Task 5</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
+                                            <h5>Task 6</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
+                                            <h5>Task 7</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
+                                            <h5>Task 8</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
+                                            <h5>Task 9</h5>
+                                            <p>---------------- sss ----------------</p>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/e16bqVThYVs?si=bx-KLYVEnt1UQIpe" ></iframe>
+                                                <script src="https://gist.github.com/LexLin004/eb0e5c4a474af422ef7cc032437fa208.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/903dacc8489f03ea476052c526d222ce.js"></script>
+
                                             <h3>Discussion</h3>
                                             <p>Briefly describe what you’ve learned, challenges that you faced, and/or any unique solutions used to fix problems.</p>
                                             <img class="img-fluid mb-2 rounded" src="https://source.unsplash.com/sv8oOQaUb-o/990x540" />
