@@ -294,8 +294,18 @@
                                                 <script src="https://gist.github.com/LexLin004/e8c81cacb0d973cded80035b696a5358.js"></script>
 
                                             <h5>Task 7</h5>
-                                            <p>---------------- sss ----------------</p>
-
+                                            <p> Method 1 is real-time data transmission. Whenever the board gets a piece of data, it sends it to the receiver immediately.
+                                                The advantage is that this allows the receiver to give immediate feedback based on the received data. And there is no need 
+                                                for complex data management and storage on the board. The disadvantage is that the effective data transfer rate is low 
+                                                because every BLE packet sent needs a overhead. It is suitable for monitoring application that needs real-time data.
+                                            </p>
+                                            <p> Method 2 is batch data transmission. A certain amount of data is stored on the board and then uniformly sent to the receiver.
+                                                The advantage is that it increases the effective data transfer rate by reducing the overhead with sending each piece of data 
+                                                individually. It also has less risk of data loss because storing data into arrays is faster than sending data individually.
+                                                The disadvantage is that this requires additional data processing on the board and uses limited storage space. 
+                                                Also this causes a delay between data collection and data transmission. This method is suitable for applications that 
+                                                value data throughput and where the board will experience scenarios with bursty data generation.
+                                            </p>
 
                                             <h5>Task 8</h5>
                                             <p>---------------- sss ----------------</p>
