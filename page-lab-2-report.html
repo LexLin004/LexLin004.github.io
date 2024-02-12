@@ -146,14 +146,14 @@
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
                                         <h1>Lab 2 report</h1>
-                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab4.html">lab </a>,
-                                            I added the IMU ICM20948 to the Artemis board and record the data from IMU when I playing the car.</p>
+                                        <p class="lead">In the <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab4.html">lab 2</a>,
+                                            I connected the IMU ICM20948 to the Artemis board and recorded and analyzed data from the IMU.</p>
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Feb 7, 2024</div>
+                                                    <div class="single-post-meta-details-date">Feb 11, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -163,19 +163,88 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Part 1</h2>
-                                            <h3>Setup for IMU</h3>
-                                            <h5>Task 1</h5>
-                                            <p>By installing the Arduino  xxxx <a href="#!">sample</a>, 
-                                            
+                                            <h2>Task 1: Set up the IMU</h2>
+                                            <h3></h3>
+                                            <p>I connected the IMU to my board's Qwiic connector.</p>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMUconnect.png" />
+                                            <div class="small text-gray-500">Figure 1: Picture of the Artemis IMU connections</div>
+                                            <p>By installing the Arduino library 'SparkFun 9DOF IMU Breakout - ICM 20948', I can run the Example1_Basics.
+                                                According to the Pimoromni, its I2C address can be 0x68/0x69(cut trace). The trace of the IMU I got is
+                                                not cut, so the address should be 0x68. Since AD0_VAL defines as the value of the last bit of the I2C
+                                                address, it should be 0 to makes it not be underflow.
                                             </p>
-                                            <h5>Task 2</h5>
-                                            <p> xxxx 
-                                            
+                                            <p> As shown in the video, the built-in LED blinks 3 times slowly on start-up to indicate the board is running. <br>
+                                                <iframe width="700" height="280" src="https://www.youtube.com/embed/CJPBBmZaFRk?si=ZZBB5pi85TxSp3nF"> </iframe>
                                             </p>
-                                            <h3>Accelerometer</h3>
-                                            <h5>Task 1</h5>
-                                            <p> ------------------- </p>
+                                            
+                                            <p> When I rotate the board, the acceleration data changes mainly to show the direction of the gravity, as shown 
+                                                in the above video and figure 2. As I rotate the IMU along the x-axis, the degree of acc_z gradually decreases 
+                                                from +1g to 0g, while acc_y becomes +1g and acc_x stays the same. The gyroscope data changes to show the 
+                                                rotational velocity. As I rotate faster, the value of gyro gets bigger and vice versa. <br>
+                                            </p>
+                                            <img width="700" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_rotate.png" />
+                                            <div class="small text-gray-500">Figure 2: Rotate IMU along X-axis</div> <br>
+                                            
+                                            <p> When I flip the board, the value of the accelerometer reverse along the axis of rotation.  As shown in figure 3, 
+                                                when I flip the IMU along the x-axis, the degree of acc_z changes from +1g to -1g.
+                                                The gyroscope shows rapid changes in angular rate. For example, the figure shows the rapid change in gyro_z.
+                                            </p>
+                                            <img width="700" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_flip.png" />
+                                            <div class="small text-gray-500">Figure 3: Flip IMU along X-axis</div> <br>
+
+                                            <p> When I accelerate along a certain axis, the accelerometer reading in that axis gets bigger. The gyroscope 
+                                                reading doesn't change much because there is no rotating IMU. As shown in figure 4, I accelerate the IMU along
+                                                 the '-x-axis' and the acc_x gets bigger, while the gyro value changes only slightly, 
+                                                 probably due to vibration and noise.
+                                            </p>
+                                            <img width="700" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_move.png" />
+                                            <div class="small text-gray-500">Figure 4: Move IMU along X-axis</div>
+                                            
+                                            <h2>Task 2: Accelerometer</h2>
+                                            <p>By using the formula 
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <mi>P</mi><mi>i</mi><mi>t</mi><mi>c</mi><mi>h</mi><mo>=</mo>
+                                                <mi mathvariant="normal">&#x3b8;</mi><mo>=</mo>
+                                                <mi mathvariant="normal">a</mi><mi>t</mi><mi>a</mi><mi>n</mi><mn>2</mn>
+                                                <mo>(</mo><msub><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi></msub>
+                                                <mo>,</mo><msub><mi mathvariant="normal">a</mi><mi mathvariant="normal">z</mi></msub><mo>)</mo>
+                                                <mo>&#xd7;</mo><mfrac><mn>180</mn><mi mathvariant="normal">&#x3c0;</mi></mfrac>
+                                                </math>
+                                                 and 
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>R</mi><mi>o</mi><mi>l</mi><mi>l</mi><mo>=</mo>
+                                                    <mi mathvariant="normal">&#x3d5;</mi><mo>=</mo>
+                                                    <mi mathvariant="normal">a</mi><mi>t</mi><mi>a</mi><mi>n</mi><mn>2</mn>
+                                                    <mo>(</mo><msub><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></msub>
+                                                    <mo>,</mo><msub><mi mathvariant="normal">a</mi><mi mathvariant="normal">z</mi></msub><mo>)</mo>
+                                                    <mo>&#xd7;</mo><mfrac><mn>180</mn><mi mathvariant="normal">&#x3c0;</mi></mfrac>
+                                                </math> 
+                                                the pitch and roll can be calculated. 
+                                            </p>
+                                            
+                                            <p> As shown in figure 5.a, the pitch value at -90 degree are . <br>
+                                                As shown in figure 5.b, the pitch value at 0 degree are .<br>
+                                                As shown in figure 5.c, the pitch value at +90 degree are .<br>
+                                            </p>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_pitch.png" />
+                                            <div class="small text-gray-500">Figure 2: Rotate IMU along X-axis</div>
+                                            <p>
+                                                As shown in figure 6.a, the roll value at -90 degree are .<br>
+                                                As shown in figure 6.b, the roll value at 0 degree are .<br>
+                                                As shown in figure 6.c, the roll value at +90 degree are .<br>
+                                            </p>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_roll.png" />
+                                            <div class="small text-gray-500">Figure 2: Rotate IMU along X-axis</div>
+                                            <p>In the pitch direction, the accuracy of +90 degrees is . The accuracy of 0 degrees is . The accuracy of -90 degrees is .<br>
+                                               In the roll direction, the accuracy of +90 degrees is . The accuracy of 0 degrees is . The accuracy of -90 degrees is .<br>
+                                               By using the two-point calibration, as shown in the Figure 7, accuracy increases.
+                                            </p>
+                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_pithchroll_2pointcalib.png" />
+                                            <div class="small text-gray-500">Figure 7: Pitch and roll value after two point calibration</div>
+
+                                            <p></p>
+
+
                                             <iframe width="270" height="480" src=> </iframe>
                                             <h5>Task 2</h5>
                                             <p> --- </p>
