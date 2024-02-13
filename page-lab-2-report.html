@@ -176,21 +176,21 @@
                                             <p> As shown in the video, the built-in LED blinks 3 times slowly on start-up to indicate the board is running. <br>
                                                 <iframe width="800" height="280" src="https://www.youtube.com/embed/CJPBBmZaFRk?si=ZZBB5pi85TxSp3nF"> </iframe>
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/ICM20948direction.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/ICM20948direction.png" />
                                             <div class="small text-gray-500">Figure 2: Picture of the Artemis IMU direction</div>
                                             <p> When I rotate the board, the acceleration data changes mainly to show the direction of the gravity, as shown 
                                                 in the above video and figure 3. As I rotate the IMU along the x-axis, the degree of acc_z gradually decreases 
                                                 from +1g to 0g, while acc_y becomes +1g and acc_x stays the same. The gyroscope data changes to show the 
                                                 rotational velocity. As I rotate faster, the value of gyro gets bigger and vice versa. <br>
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_rotate.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_rotate.png" />
                                             <div class="small text-gray-500">Figure 3: Rotate IMU along X-axis</div> <br>
                                             
                                             <p> When I flip the board, the value of the accelerometer reverse along the axis of rotation. As shown in figure 4, 
                                                 when I flip the IMU along the x-axis, the degree of acc_z changes from +1g to -1g.
                                                 The gyroscope shows rapid changes in angular rate. For example, the figure shows the rapid change in gyro_z.
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_flip.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_flip.png" />
                                             <div class="small text-gray-500">Figure 4: Flip IMU along X-axis</div> <br>
 
                                             <p> When I accelerate along a certain axis, the accelerometer reading in that axis gets bigger. The gyroscope 
@@ -198,10 +198,11 @@
                                                  the '-x-axis' and the acc_x gets bigger, while the gyro value changes only slightly, 
                                                  probably due to vibration and noise.
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_move.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_x_move.png" />
                                             <div class="small text-gray-500">Figure 5: Move IMU along X-axis</div>
                                             
                                             <h2>Task 2: Accelerometer</h2>
+                                            <h4>Convert to pitch and roll only from accelerometer data</h4>
                                             <p>By using the formula: 
                                                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                                                 <mi>Pitch</mi><mo>=</mo>
@@ -232,8 +233,8 @@
                                                 </math>
                                                 <br><br>
                                                 As shown in the middle plot in the figure 5, the pitch value at 0 degree are -0.00567.
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Absolute Error</mi><mo>=</mo><mo>(</mo><mn>0</mn><mo>-</mo>
-                                                    <mn>0.005668001003009033</mn><mo>)</mo><mo>&#xd7;</mo><mn>100</mn><mo>%</mo><mo>=</mo><mn>0.57</mn><mo>%</mo>
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Absolute Error</mi><mo>=</mo><mo>|</mo><mn>0</mn><mo>-</mo>
+                                                    <mn>0.005668001003009033</mn><mo>|</mo><mo>=</mo><mn>0.0057</mn>
                                                 </math>
                                                 <br><br>
                                                 As shown in the right plot in the figure 5, the pitch value at +90 degree are 87.02103.
@@ -243,7 +244,7 @@
                                                 </math>
                                                 <br><br>
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/pitch-90-90.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/pitch-90-90.png" />
                                             <div class="small text-gray-500">Figure 5: Place IMU along Pitch direction at {-90, 0, 90} degrees</div>
                                             <p>
                                                 As shown in the left plot in the figure 6, the roll value at -90 degree are -87.15554. 
@@ -253,8 +254,8 @@
                                                 </math>   
                                                 <br><br>
                                                 As shown in the middle plot in the figure 6, the roll value at 0 degree are -0.05848.
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Absolute Error</mi><mo>=</mo><mo>(</mo><mn>0</mn><mo>-</mo>
-                                                    <mn>-0.058475426278836506</mn><mo>)</mo><mo>&#xd7;</mo><mn>100</mn><mo>%</mo><mo>=</mo><mn>5.85</mn><mo>%</mo>
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Absolute Error</mi><mo>=</mo><mo>|</mo><mn>0</mn><mo>-</mo>
+                                                    <mn>-0.058475426278836506</mn><mo>|</mo><mo>=</mo><mn>0.0585</mn>
                                                 </math>    
                                                 <br><br>
                                                 As shown in the right plot in the figure 6, the roll value at +90 degree are 86.37310.
@@ -264,18 +265,55 @@
                                                 </math>
                                                 <br><br>
                                             </p>
-                                            <img width="800" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/roll-90-90.png" />
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/roll-90-90.png" />
                                             <div class="small text-gray-500">Figure 6: Place IMU along roll direction at {-90, 0, 90} degrees</div>
                                             
                                             <p>The data and code for above calculation and plot is <a href="https://github.com/LexLin004/robotcode/tree/main/pitch_roll_a_data_code_plot">here</a>.
                                             </p>
-
-
-                                            <img width="300" class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_pithchroll_2pointcalib.png" />
+                                            <p>
+                                                I can use two-point calibration for pitch based on the points (-90, -86.76915747241726) and (90, 87.0210330992979). The result formula is 
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>pitch</mi><mo>=</mo><mn>1.03573164519733 *</mn><mi>pitch_old</mi><mo>-</mo><mn>0.130437778707076</mn><mrow/></math>.
+                                            <br>                 
+                                                For roll, the two points I used are (-90, -87.1555421686747) and (90, 86.37309929789367). The result formula is 
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>roll</mi><mo>=</mo><mn>1.03729274014214 *</mn><mi>roll_old</mi><mo>+</mo><mn>0.405811154718554</mn></math>.
+                                            </p>
+                                            <p> The following 6 plots in figure 7 show the pitch and roll value after two point calibration. The mean value of IMU's pitch and roll data are 
+                                                more closed to the correct value.
+                                            </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_pitchroll_a_aftercali.png" />
                                             <div class="small text-gray-500">Figure 7: Pitch and roll value after two point calibration</div>
 
-                                            <p></p>
+                                            <h4>Fourier Transform & Complimentary low pass filter</h4>
+                                            <p>
 
+
+                                            </p>
+
+                                            <h4>Simple lowpass filter</h4>
+                                            <p>
+
+                                            </p>
+
+                                            <h2>Gyroscope</h2>
+                                            <h4>Compute pitch, roll, and yaw only from gyroscope data</h4>
+                                            <p>
+
+                                            </p>
+
+                                            <h4>Complimentary filter</h4>
+                                            <p>
+
+                                            </p>
+
+                                            <h2>Sample Data</h2>
+                                            <h4>Speed of sampling discussion</h4>
+
+                                            <h4>Collect and store time-stamped IMU data in arrays</h4>
+
+
+                                            <h4>Discussion</h4>
+
+                                            <h4>Collection and send via BLE</h4>
 
                                             <iframe width="270" height="480" src=> </iframe>
                                             <h5>Task 2</h5>
