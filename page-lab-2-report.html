@@ -174,7 +174,7 @@
                                                 address, it should be 0 to makes it not be underflow.
                                             </p>
                                             <p> As shown in the video, the built-in LED blinks 3 times slowly on start-up to indicate the board is running. <br>
-                                                <iframe width="800" height="280" src="https://www.youtube.com/embed/CJPBBmZaFRk?si=ZZBB5pi85TxSp3nF"> </iframe>
+                                                <iframe width="600" height="300" src="https://www.youtube.com/embed/CJPBBmZaFRk?si=ZZBB5pi85TxSp3nF"> </iframe>
                                             </p>
                                             <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/ICM20948direction.png" />
                                             <div class="small text-gray-500">Figure 2: Picture of the Artemis IMU direction</div>
@@ -285,14 +285,50 @@
 
                                             <h4>Fourier Transform & Complimentary low pass filter</h4>
                                             <p>
-
-
+                                                I collected 996 accelerometer data without large noise around, the data in time domain and in frequency domain plot are shown in the 
+                                                figure 8 and figure 9. Then, I collected 996 accelerometer data with large noise around(knock the table), the data in time domain and in frequency domain plot are shown in the 
+                                                figure 10 and figure 11. As you can see in the figure 11, the cutoff frequency should be around 40Hz.
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>&#x3b1;</mi><mo>=</mo><mfrac><mi>T</mi><mrow><mi>T</mi><mo>+</mo><mi>RC</mi></mrow></mfrac><mo>=</mo>
+                                                    <mfrac><mfrac><mn>1</mn><mrow><mi>sample_rate</mi></mrow></mfrac>
+                                                    <mrow><mfrac><mn>1</mn><mrow><mi>sample_rate</mi></mrow></mfrac><mo>+</mo>
+                                                    <mfrac><mn>1</mn><mrow><mn>2</mn><mi>&#x3c0;</mi><msub><mi>f</mi><mi>c</mi></msub>
+                                                    </mrow></mfrac></mrow></mfrac><mo>=</mo><mfrac><mfrac><mn>1</mn><mn>153.9052268643466</mn>
+                                                    </mfrac><mrow><mfrac><mn>1</mn><mn>153.9052268643466</mn></mfrac><mo>+</mo><mfrac><mn>1</mn>
+                                                        <mrow><mn>2</mn><mi>&#x3c0;</mi><mo>&#xd7;</mo><mn>40</mn><mi>H</mi><mi>z</mi></mrow></mfrac></mrow></mfrac>
+                                                        <mo>=</mo><mn>0.62021</mn>
+                                                </math>
                                             </p>
 
-                                            <h4>Simple lowpass filter</h4>
-                                            <p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_stationary_time.png" />
+                                            <div class="small text-gray-500">Figure 8: Pitch and roll Time Domain Plot without vibrating the table</div>
 
-                                            </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_stationary_freq.png" />
+                                            <div class="small text-gray-500">Figure 9: Pitch and roll Freq Domain Plot without vibrating the table</div>
+
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_knock_time.png" />
+                                            <div class="small text-gray-500">Figure 10: Pitch and roll Time Domain Plot with vibrating the table</div>
+
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_knock_freq.png" />
+                                            <div class="small text-gray-500">Figure 11: Pitch and roll Freq Domain Plot with vibrating the table</div>
+
+                                            <p>However, after applying the low pass filter as following code, there's little change in pitch and roll in the frequency domain, as shown in figure 13.</p>
+                                            <script src="https://gist.github.com/LexLin004/94a3121bcb34f809b1728eb33a76a2a0.js"></script>
+                                            
+                                            
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_knock_lp_time.png" />
+                                            <div class="small text-gray-500">Figure 12: Pitch and roll Time Domain Plot with lowpass filter and vibrating the table</div>
+
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/vibration_knock_lp_freq.png" />
+                                            <div class="small text-gray-500">Figure 13: Pitch and roll Freq Domain Plot with lowpass filter and vibrating the table</div>
+                                            <p>The code in python used to collect the serial data and analyze is shown in the following script.</p>
+                                            <script src="https://gist.github.com/LexLin004/e888aeafcbe32e3ea28e1e5ed6ff056b.js"></script>
+
+                                            <h4> Discussion on result </h4>
+                                            <p>The reason the simple low-pass filter I wrote doesn't work is probably because there is a filter built into the chip, as shown in Figure 14. 
+                                                This image can be found in the <a href="https://invensense.tdk.com/wp-content/uploads/2016/06/DS-000189-ICM-20948-v1.3.pdf"> ICM-20948 datasheet</a>. </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/builtin_lp_filter.png" />
+                                            <div class="small text-gray-500">Figure 14: Built-in Low-pass Filter</div>
 
                                             <h2>Gyroscope</h2>
                                             <h4>Compute pitch, roll, and yaw only from gyroscope data</h4>
