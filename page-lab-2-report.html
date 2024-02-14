@@ -286,7 +286,7 @@
                                             <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/IMU_pitchroll_a_aftercali.png" />
                                             <div class="small text-gray-500">Figure 7: Pitch and roll value after two point calibration</div>
 
-                                            <h4>Fourier Transform & Complimentary low pass filter</h4>
+                                            <h4>Fourier Transform & complementary low pass filter</h4>
                                             <p>
                                                 I collected 996 accelerometer data without large noise around, the data in time domain and in frequency domain plot are shown in the 
                                                 figure 8 and figure 9. Then, I collected 996 accelerometer data with large noise around(knock the table), the data in time domain and in frequency domain plot are shown in the 
@@ -334,15 +334,67 @@
                                             <div class="small text-gray-500">Figure 14: Built-in Low-pass Filter</div>
 
                                             <h2>Gyroscope</h2>
-                                            <h4>Compute pitch, roll, and yaw only from gyroscope data</h4>
+                                            <h4>Compute pitch, roll, and yaw from gyroscope data and complementary filter</h4>
                                             <p>
-                                                
+                                                By using the following code burned into the board, I can get the yaw_g, pitch_g, roll_g form the integration of gyroscope data.
+                                                I also can get pitch, roll from complementary filter using gyroscope data and accelerometer data.
                                             </p>
-
-                                            <h4>Complimentary filter</h4>
+                                            <script src="https://gist.github.com/LexLin004/53b7de67c1daa2ac8f8eea00fb000265.js"></script>
                                             <p>
-
+                                                To show the accuracy and range of pitch_g calculated using only gyroscope data and pitch calculated using the complementary filter, 
+                                                I rotated imu along the x-axis and showed their values at {-90,0,90} degrees, as seen in Figure 15. At the beginning (left plot), 
+                                                pitch_g and pitch are overlapped, and at a stable 90 degrees, pitch_g = 85.72 and pitch = 86.5, the accuracy rate are 95.24% and 96.11%.
+                                                However, due to the cumulative error caused by the integration, pitch_g is shifted more and more, which can be seen in the middle 
+                                                and right plots, where the blue line and the red line are gradually separating from each other. 
+                                                At a steady 0 degrees, pitch_g = -6.51 and pitch = 0.11, the absolute error are 6.51% and 0.11%.
+                                                At a steady -90 degrees, pitch_g = -97.86 and pitch = -87.55, the accuracy rate are 91.27% and 97.28%.
                                             </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/Time_Domain_Signal_of_pitch_g,_roll_g,_yaw_g,_pitch,_roll_when_rotate_along_x.png" />
+                                            <div class="small text-gray-500">Figure 15: Time Domain Signal of pitch_g, roll_g, yaw_g, pitch, roll when rotate along x</div>
+
+                                            <p>
+                                                To show the accuracy and range of roll_g calculated using only gyroscope data and roll calculated using the complementary filter, 
+                                                I rotated imu along the y-axis and showed their values at {-90,0,90} degrees, as seen in Figure 16. 
+                                                At a stable 90 degrees, roll_g = 105.72 and roll = 87.92, the accuracy rate are 72.53% and 97.69%.
+                                                At a stable 0 degrees, roll_g = 16.06 and roll = 0.23, the absolute error are 16.06% and 0.23%.
+                                                At a stable -90 degrees, roll_g = -72.26 and roll = -86.41, the accuracy rate are 80.29% and 96.01%.
+                                            </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/Time_Domain_Signal_of_pitch_g,_roll_g,_yaw_g,_pitch,_roll_when_rotate_along_y.png" />
+                                            <div class="small text-gray-500">Figure 16: Time Domain Signal of pitch_g, roll_g, yaw_g, pitch, roll when rotate along y</div>
+
+                                            <p>
+                                                To show the accuracy and range of yaw calculated using only gyroscope data, 
+                                                I rotated imu along the z-axis and showed their values at {-90,0,90} degrees, as seen in Figure 17. 
+                                                At a stable 90 degrees, roll_g = 107.6, the accuracy rate are 80.44%.
+                                                At a stable 0 degrees, roll_g = 19.69, the absolute error are 19.69%.
+                                                At a stable -90 degrees, roll_g = -69.3, the accuracy rate are 77.00%.
+                                            </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/Time_Domain_Signal_of_pitch_g,_roll_g,_yaw_g,_pitch,_roll_when_rotate_along_z.png" />
+                                            <div class="small text-gray-500">Figure 17: Time Domain Signal of pitch_g, roll_g, yaw_g, pitch, roll when rotate along z</div>
+
+                                            <p>
+                                                The pitch, roll, and yaw values from the integration of gyroscope data only are gradually shifted over time, even at rest, as seen in Figure 18.
+                                                However, the pitch and roll from the complementary filter does not be affected. They are not susceptible to drift or quick vibrations.
+                                            </p>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/Time_Domain_Signal_of_pitch_g,_roll_g,_yaw_g,_pitch,_roll at_original_position_for_30_seconds.png" />
+                                            <div class="small text-gray-500">Figure 17: Time Domain Signal of pitch_g, roll_g, yaw_g, pitch, roll at original position for 30 seconds</div>
+
+
+                                            <p>
+                                                By using the following code, I changed the frequency from 83.33Hz to 20Hz. Then, I did the same operation of rotation to my IMU. As shwon in Figure 18,
+                                                a lower frequency caused the drift be bigger, and the accuracy rate of pitch_g, roll_g, yaw_g, pitch, and roll be lower since the dy in the integral 
+                                                becomes larger, and each sampling of gyro and acce values had a greater impact on the results.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/3f938bfc2107f475c84e6887b26a29d9.js"></script>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab2_assets/Time_Domain_Signal_of_pitch_g,_roll_g,_yaw_g,_pitch,_roll_20Hz.png" />
+                                            <div class="small text-gray-500">Figure 18: Time Domain Signal of pitch_g, roll_g, yaw_g, pitch, roll when frequency=20Hz</div>
+
+                                            <p>
+                                                As shown in the following video, the range of the complementary filter is -180 degrees to 180 degrees since when I rotate the IMU along x/y axis more than 180 degrees,
+                                                the value will change to -180 degrees. This brings up some design considerations, as we need to avoid applying this filter to devices with large steering ranges, 
+                                                or needing to do extra work on the formulas, or on the subsequent analysis of the data in this case.
+                                            </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/ckP9GlkPt_Y?si=Gsx2BHpY7eyFkLCK"></iframe>
 
                                             <h2>Sample Data</h2>
                                             <h4>Speed of sampling discussion</h4>
