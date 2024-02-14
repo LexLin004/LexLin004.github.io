@@ -398,7 +398,15 @@
 
                                             <h2>Sample Data</h2>
                                             <h4>Speed of sampling discussion</h4>
-
+                                            <p> To speed up the execution of the main loop, I burned following code into board, I got following feedback:  <br>
+                                                Time elapsed: 11065 <br>
+                                                Data recorded: 3000 <br>
+                                                Frequency: 271.13 <br>
+                                                NOT READY TIMES: 39 <br>
+                                                The spped of the new way used to sample data is 271.13Hz.
+                                                The main loop on the Artemis runs faster than the IMU produces new values since in the main loop, the times of myICM.dataReady() is false is 39.
+                                                </p>
+                                            <script src="https://gist.github.com/LexLin004/7233e2b7c9a7e56dfac4dd552a35b4d6.js"></script>
                                             <h4>Collect and store time-stamped IMU data in arrays</h4>
 
 
