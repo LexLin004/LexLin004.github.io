@@ -399,16 +399,22 @@
                                             <h2>Sample Data</h2>
                                             <h4>Speed of sampling discussion</h4>
                                             <p> To speed up the execution of the main loop, I burned following code into board, I got following feedback:  <br>
-                                                Time elapsed: 11065 <br>
+                                                First DataPoint - timestamp: 81, floats[0]: -9.765625 <br>
+                                                Last DataPoint - timestamp: 7417, floats[0]: -13.671875 <br>
+                                                Time elapsed: 7336 <br>
                                                 Data recorded: 3000 <br>
-                                                Frequency: 271.13 <br>
-                                                NOT READY TIMES: 39 <br>
-                                                The spped of the new way used to sample data is 271.13Hz.
-                                                The main loop on the Artemis runs faster than the IMU produces new values since in the main loop, the times of myICM.dataReady() is false is 39.
+                                                Frequency: 408.94 <br>
+                                                NOT READY TIMES: 42 <br>
+                                                The spped of the new way used to sample data is 408.94Hz.
+                                                The main loop on the Artemis runs faster than the IMU produces new values since in the main loop, the times of myICM.dataReady() is false is 42.
                                                 </p>
                                             <script src="https://gist.github.com/LexLin004/7233e2b7c9a7e56dfac4dd552a35b4d6.js"></script>
                                             <h4>Collect and store time-stamped IMU data in arrays</h4>
-
+                                                As shown in the above code, the size of the array 'dataPoints' stored the IMU data is the flag being used to stop the operation of store new IMU data.
+                                                In the array used to store IMU data, each element in it is 9 floats and 1 unsigned int string, including 9 imu data and 1 time stamp. I choose to use
+                                                this struct to stroe data to increase the sampling rate.
+                                                Since the memory of the Artemis is 384KB, and I uses struct of 40 bytes = 4bytes * 9 floats + 4bytes*1 unsigned long. If the sampling
+                                                rate is 408.94Hz, the Artemis can store 384 * 1024 / 40 / 408.94 = 24.04 seconds.
 
                                             <h4>Discussion</h4>
 
