@@ -415,13 +415,15 @@
                                                 this struct to stroe data to increase the sampling rate.
                                                 Since the memory of the Artemis is 384KB, and I uses struct of 40 bytes = 4bytes * 9 floats + 4bytes*1 unsigned long. If the sampling
                                                 rate is 408.94Hz, the Artemis can store 384 * 1024 / 40 / 408.94 = 24.04 seconds.
+                                                <br> Then, I combined 1 IMU data (9 floats + 1 unsigned long) to be a string in csv format, and send to computer via BLE. Related codes are shown following.
+
 
                                             <h4>Discussion</h4>
 
                                             <h4>Collection and send via BLE</h4>
 
                                             <h2>Record a stunt</h2>
-                                            
+
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
