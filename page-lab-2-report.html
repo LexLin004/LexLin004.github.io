@@ -408,20 +408,29 @@
                                                 The spped of the new way used to sample data is 408.94Hz.
                                                 The main loop on the Artemis runs faster than the IMU produces new values since in the main loop, the times of myICM.dataReady() is false is 42.
                                                 </p>
-                                            <script src="https://gist.github.com/LexLin004/7233e2b7c9a7e56dfac4dd552a35b4d6.js"></script>
+                                                <script src="https://gist.github.com/LexLin004/7233e2b7c9a7e56dfac4dd552a35b4d6.js"></script>
                                             <h4>Collect and store time-stamped IMU data in arrays</h4>
-                                                As shown in the above code, the size of the array 'dataPoints' stored the IMU data is the flag being used to stop the operation of store new IMU data.
+                                            <p> As shown in the above code, the size of the array 'dataPoints' stored the IMU data is the flag being used to stop the operation of store new IMU data.
                                                 In the array used to store IMU data, each element in it is 9 floats and 1 unsigned int string, including 9 imu data and 1 time stamp. I choose to use
                                                 this struct to stroe data to increase the sampling rate.
                                                 Since the memory of the Artemis is 384KB, and I uses struct of 40 bytes = 4bytes * 9 floats + 4bytes*1 unsigned long. If the sampling
                                                 rate is 408.94Hz, the Artemis can store 384 * 1024 / 40 / 408.94 = 24.04 seconds.
                                                 <br> Then, I combined 1 IMU data (9 floats + 1 unsigned long) to be a string in csv format, and send to computer via BLE. Related codes are shown following.
-
-
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/7233e2b7c9a7e56dfac4dd552a35b4d6.js"></script>
+                                            
                                             <h4>Discussion</h4>
-
+                                            <p>I use a large struct array to store the accelerometer and gyroscope data to get the highest sampling rate. I chose to use this way to store the data
+                                                 because most IMU data is of the floating point type, this structure makes reading the data easy to understand, and it uses the least amount of memory. 
+                                                 When sending the data to the computer, I reconstructed the data into a string consisting of 9 IMU data + 1 timestamp. This way, it is sent data 
+                                                 faster than if all the floating point type data was sent individually.
+                                            </p>    
+                                            <script src="https://gist.github.com/LexLin004/b7e1960c29bd1d31ed374739e598ba09.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/26b756ac373413a0f8595f9ce4d7e5b3.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/acfa159a127c89ba2f70a79d53a2538a.js"></script>
                                             <h4>Collection and send via BLE</h4>
-
+                                            <p>The following video shows the board collects 5s IMU data and sends to the computer via BLE.</p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/dCqwjQjZ9aw?si=yZblm4M1XwX10Kv0"></iframe>
                                             <h2>Record a stunt</h2>
 
                                             <hr class="my-5" />
