@@ -147,8 +147,8 @@
                                     <div class="single-post">
                                         <h1>Lab 3 report</h1>
                                         <p class="lead">In the <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab3.html">lab 3</a>,
-                                            I conencted two <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">VL53L1X Time-of-Flight Distance Sensors </a> to the Artemis board. Then, I recorded the data from them
-                                            and tested and discussed about the speed and distance of ToF sensor.</p>
+                                            I conencted two <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">VL53L1X Time-of-Flight Distance Sensors </a> to the Artemis board. 
+                                            Then, I recorded the data from them and tested and discussed about the speed and distance of ToF sensor.</p>
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
@@ -165,11 +165,20 @@
                                         </div>
                                         <div class="single-post-text my-5">
                                             <h2>Part 1: Prelab</h2>
-                                            <p>According to <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">datasheet</a>, the sensor's default I2C address
-                                            is 0x52. However, the address is 0x29 as shown in Figure 1.
+                                            <p>
+                                                According to <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">datasheet</a>, the sensor's default I2C address
+                                                is 0x52. However, the address is 0x29 as shown in Figure 1. This is the same as described in <a href="https://www.pololu.com/product/3415"> Pololu website </a>.
+                                                Since ToF is a slave device, it only has 7bit address (0x29 = 0101001). However, if an 8-bit representation is used with the read/write bits as least 
+                                                significant bits (0 for write and 1 for read), the 7-bit address (0x29) will be shifted one bit to the left and the read/write bit will be appended to 
+                                                that address so that the address will be 0x52 = 01010010.
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/initTOFaddr.png" />
                                             <div class="small text-gray-500">Figure 1: default I2C address of ToF testing by Apollo3/Wire/Example1_wire_I2C</div>
+                                            <p>
+
+                                            </p>
+                                            
+                                            
                                             <h5>Task 2</h5>
                                             <p> xxxx 
                                             
