@@ -201,11 +201,17 @@
                                                 The ToF sensor has 2 modes: Short(1.3m) and Long(4m).  The short distance mode is more accurate, but the measurement distance is only 1.3m, 
                                             which is suitable for slow-moving robots. The long distance mode of 4m favors fast robots. Although the accuracy in this mode is lower due 
                                             to the noise, when due to the long distance, it enables fast moving robots to react in time. Therefore, I chose to use the long distance mode.<br>
-
-                                            
-
                                             </p>
-                                            
+                                            <p>
+                                                I designed a test rig, as shown in Figure 4, with the sensor in a similar position to where it will be on the robot. 
+                                            </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/initTOFaddr.png" />
+                                            <div class="small text-gray-500">Figure 3: default I2C address of ToF testing by Apollo3/Wire/Example1_wire_I2C</div>
+                                            <h6>Sensor Range</h6>
+                                            <p>
+                                                在长距离模式下以及如图5所示的测试环境下，我每隔10cm使用tof sensor收集了一次数据，得出他的范围是xxxx. 并生成了图6中的图表。红色的是预期值，蓝色的是测量值，绿色是平均值。
+                                                可以看出他们十分接近。 我基于测量值计算了每个距离时数据的standard deviation, 如图7所示。standard deviation的值也是较小的。因此，tof在长距离模式下，精度还不错。
+                                            </p>
                                             
                                             <h4>Disscusion of 2 ToF sensors working in parallel</h4>
 
