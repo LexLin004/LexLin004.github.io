@@ -147,7 +147,7 @@
                                     <div class="single-post">
                                         <h1>Lab 3 report</h1>
                                         <p class="lead">In the <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab3.html">lab 3</a>,
-                                            I conencted two <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">VL53L1X Time-of-Flight Distance Sensors </a> to the Artemis board. 
+                                            I connected two <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">VL53L1X Time-of-Flight Distance Sensors </a> to the Artemis board. 
                                             Then, I recorded the data from them and tested and discussed about the speed and distance of ToF sensor.</p>
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
@@ -167,34 +167,59 @@
                                             <h2>Part 1: Prelab</h2>
                                             <p>
                                                 According to <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">datasheet</a>, the sensor's default I2C address
-                                                is 0x52. However, the address is 0x29 as shown in Figure 1. This is the same as described in <a href="https://www.pololu.com/product/3415"> Pololu website </a>.
+                                                is 0x52. 
+                                                Since the robot will uses two ToF sensors, but the address of the sensor is hardwired on the board, we can only programmatically change the addresses 
+                                                or enable the sensors separately by changing the voltage of their shutdown pins. I choose to solder the XSHUT pin of a TOF (tof1) to GPIO 8 of the 
+                                                artemis board to change the address, as shown by the grey line in Figure 2. First, I will turn off tof1 and then change the address of tof2. 
+                                                Finally, I will turn on tof1 again. Therefore, both sensors can be used simultaneously.
+                                            </p>
+                                            
+
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/connection_scheme.png" />
+                                            <div class="small text-gray-500">Figure 1: Connection Scheme</div>
+                                            <p>
+                                                I will mount one sensor in front of the robot and the other in the back of the robot. So obstacles can be seen when the robot is moving forward,
+                                                backward, and rotating. But this may make the robot miss obstacles on both sides while moving forward. If the sensors are mounted on the left 
+                                                and right sides, the robot loses the front and rear view, so that the robot is prone to hit obstacles while moving. If the sensors are mounted 
+                                                on adjacent sides (e.g., front side and right side), both cause the robot to miss obstacles on the other side.
+                                            </p>
+                                            
+                                            <h2>Part 2: Lab tasks</h2>
+                                            <h4>Wiring</h4>
+                                            <p>According to the Connection Scheme, I soldered the two tof sensors, imu, and my artemis board as shown in Figure 2.</p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/soldering_tof_imu_board.jpg" />
+                                            <div class="small text-gray-500">Figure 2: Connection</div>
+                                            <p> The address is 0x29 as shown in Figure 3. This is the same as described in <a href="https://www.pololu.com/product/3415"> Pololu website </a>.
                                                 Since ToF is a slave device, it only has 7bit address (0x29 = 0101001). However, if an 8-bit representation is used with the read/write bits as least 
                                                 significant bits (0 for write and 1 for read), the 7-bit address (0x29) will be shifted one bit to the left and the read/write bit will be appended to 
                                                 that address so that the address will be 0x52 = 01010010.
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/initTOFaddr.png" />
-                                            <div class="small text-gray-500">Figure 1: default I2C address of ToF testing by Apollo3/Wire/Example1_wire_I2C</div>
+                                            <div class="small text-gray-500">Figure 3: default I2C address of ToF testing by Apollo3/Wire/Example1_wire_I2C</div>
+                                            <h4>Disscusion of ToF sensor performance</h4>
                                             <p>
+                                                The ToF sensor has 2 modes: Short(1.3m) and Long(4m).  The short distance mode is more accurate, but the measurement distance is only 1.3m, 
+                                            which is suitable for slow-moving robots. The long distance mode of 4m favors fast robots. Although the accuracy in this mode is lower due 
+                                            to the noise, when due to the long distance, it enables fast moving robots to react in time. Therefore, I chose to use the long distance mode.<br>
+
+                                            
 
                                             </p>
                                             
                                             
-                                            <h5>Task 2</h5>
-                                            <p> xxxx 
-                                            
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/connection scheme.png" />
-                                            <div class="small text-gray-500">Figure 2: Connection Scheme</div>
-                                            <h3>Accelerometer</h3>
-                                            <h5>Task 1</h5>
-                                            <p> ------------------- </p>
+                                            <h4>Disscusion of 2 ToF sensors working in parallel</h4>
+
+                                            <h4>Disscusion of speed and limiting factor of ToF sensor</h4>
+
+                                            <h4>Bluetooth</h4>
+
+                                            <h4>Discussion on infrared transmission based sensors</h4>
+
+                                            <h4>Sensitivity of sensors to colors and textures</h4>
+
                                             <iframe width="270" height="480" src=> </iframe>
-                                            <h5>Task 2</h5>
-                                            <p> --- </p>
-                                            <iframe width="450" height="450" src=> </iframe>
-                                            <h5>Task 3</h5>
-                                            <p> code sample
-                                                <script src="https://gist.github.com/LexLin004/d71f8c79b712022ef4988cab55c5726e.js"></script>.
+                                            <script src="https://gist.github.com/LexLin004/d71f8c79b712022ef4988cab55c5726e.js"></script>
+
                                             
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
