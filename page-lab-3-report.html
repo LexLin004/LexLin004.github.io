@@ -229,15 +229,25 @@
 
                                             <h4>Disscusion of speed and limiting factor of ToF sensor</h4>
                                             <p>
-                                                By adding the following code to loop() to print the Artemis clock to the serial output, I found that my loop was executing 4-5 milliseconds per cycle, while the 2 tof sensor was sampling at 85 milliseconds per cycle.
+                                                By adding the following code to loop() to print the Artemis clock to the serial output, I found that my loop was executing 4-5 milliseconds per cycle, 
+                                                while the 2 tof sensor was sampling at 85 milliseconds per cycle.
                                                 The current limiting factor is the time wasted printing to serial output. This also causes some delay.
                                             </p>
+                                            <script src="https://gist.github.com/LexLin004/57c371e7c4ac1f41c2f142f5e8043ae3.js"></script>
                                             <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/demo_sampling_speed.png" />
                                             <div class="small text-gray-500">Figure 9: Demo of Sampling Speed</div>
-                                            <script src="https://gist.github.com/LexLin004/57c371e7c4ac1f41c2f142f5e8043ae3.js"></script>
                                             
                                             <h4>Bluetooth</h4>
-
+                                            <p>I sended the distance measured by the two tof sensors in 5 seconds to my computer via Bluetooth and draw it as a plot as shown in Figure 10. 
+                                                The following code is what I wrote in Arduino and JupyterNotebook for sending and receiving 5 seconds of tof sensor data. 
+                                                Two tof sensors were mounted on the test platform shown in Figure 4, moving from one wall to another. It can be seen that the distance measured 
+                                                by tof1 becomes larger as it moves away from the wall it is facing, while the distance measured by tof2 becomes smaller as it gets closer to the wall it is facing.</p>
+                                            <script src="https://gist.github.com/LexLin004/70d3f27c98196b2153acab18c1635e2c.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/cc7d9445befb7da0f2918bb8063bb9e4.js"></script>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/-lSw-rwW7b4?si=b369DzVqLASXo8vN" ></iframe>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/TOF_Measurements_Over_Time.png" />
+                                            <div class="small text-gray-500">Figure 10: Plot of 2 ToF data</div>
+                                            
                                             <h4>Discussion on infrared transmission based sensors</h4>
 
                                             <h4>Sensitivity of sensors to colors and textures</h4>
