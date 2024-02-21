@@ -203,16 +203,28 @@
                                             to the noise, when due to the long distance, it enables fast moving robots to react in time. Therefore, I chose to use the long distance mode.<br>
                                             </p>
                                             <p>
-                                                I designed a test rig, as shown in Figure 4, with the sensor in a similar position to where it will be on the robot. 
+                                                I designed a test platform, as shown in Figure 4, with the sensor in a similar position to where it will be on the robot. 
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/initTOFaddr.png" />
-                                            <div class="small text-gray-500">Figure 3: default I2C address of ToF testing by Apollo3/Wire/Example1_wire_I2C</div>
-                                            <h6>Sensor Range</h6>
+                                            <img width=200 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/test_setup.jpg" />
+                                            <div class="small text-gray-500">Figure 4: Test Platform</div>
+                                            <h6>Sensor range, Accuracy, Repeatability, and Ranging time</h6>
                                             <p>
-                                                在长距离模式下以及如图5所示的测试环境下，我每隔10cm使用tof sensor收集了一次数据，得出他的范围是xxxx. 并生成了图6中的图表。红色的是预期值，蓝色的是测量值，绿色是平均值。
-                                                可以看出他们十分接近。 我基于测量值计算了每个距离时数据的standard deviation, 如图7所示。standard deviation的值也是较小的。因此，tof在长距离模式下，精度还不错。
+                                                In the long-range mode and test environment shown in Figure 5, I used the tof sensor to collect data at 10-cm intervals from 
+                                                0 cm to 450 cm, with more than 100 data at each distance. I did the above test in using 100ms timing budget and 300ms timing budget.
+                                                The mean and standard deviation are shown in figure 6 and 7. 
+                                                The range of sensor in this mode is from 5cm - 400cm. Measurements from 10cm to 300cm are accurate. Outside this range, 
+                                                the measured values deviate significantly from the actual values. The data from the tests and the code for analyzing the data can be found in this 
+                                                <a href="https://github.com/LexLin004/robotcode/blob/main/Lab3_performanceOfsingleTOF.zip">file</a>.
                                             </p>
-                                            
+
+
+                                            <img width=200 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/test_environment.jpg" />
+                                            <div class="small text-gray-500">Figure 5: Test Environment</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/Distance_Measurement_Accuracy.png" />
+                                            <div class="small text-gray-500">Figure 6: Distance Measurement Accuracy</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/Standard_Deviation_of_Distance_Measurements.png" />
+                                            <div class="small text-gray-500">Figure 7: Standard Deviation of Distance Measurements</div>
+
                                             <h4>Disscusion of 2 ToF sensors working in parallel</h4>
 
                                             <h4>Disscusion of speed and limiting factor of ToF sensor</h4>
