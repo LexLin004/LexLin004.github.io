@@ -173,8 +173,6 @@
                                                 artemis board to change the address, as shown by the grey line in Figure 2. First, I will turn off tof1 and then change the address of tof2. 
                                                 Finally, I will turn on tof1 again. Therefore, both sensors can be used simultaneously.
                                             </p>
-                                            
-
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/connection_scheme.png" />
                                             <div class="small text-gray-500">Figure 1: Connection Scheme</div>
                                             <p>
@@ -230,7 +228,14 @@
                                             <div class="small text-gray-500">Figure 8: Two ToF sensors work simultaneously</div>
 
                                             <h4>Disscusion of speed and limiting factor of ToF sensor</h4>
-
+                                            <p>
+                                                By adding the following code to loop() to print the Artemis clock to the serial output, I found that my loop was executing 4-5 milliseconds per cycle, while the 2 tof sensor was sampling at 85 milliseconds per cycle.
+                                                The current limiting factor is the time wasted printing to serial output. This also causes some delay.
+                                            </p>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab3_assets/demo_sampling_speed.png" />
+                                            <div class="small text-gray-500">Figure 9: Demo of Sampling Speed</div>
+                                            <script src="https://gist.github.com/LexLin004/57c371e7c4ac1f41c2f142f5e8043ae3.js"></script>
+                                            
                                             <h4>Bluetooth</h4>
 
                                             <h4>Discussion on infrared transmission based sensors</h4>
