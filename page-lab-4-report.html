@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Lab 3 Fast Robot - Shihming Lin</title>
+        <title>Lab 4 Fast Robot - Shihming Lin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/project-cover/right_corner_icon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
@@ -145,15 +145,18 @@
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
-                                        <h1>Lab 3 report</h1>
-                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab4.html">lab </a>,
-                                            I added the IMU ICM20948 to the Artemis board and record the data from IMU when I playing the car.</p>
+                                        <h1>Lab 4 report</h1>
+                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab5.html">lab </a>,
+                                            I integrated two <a href="https://www.pololu.com/product-info-merged/2130">DRV8833 Dual Motor Driver </a>
+                                             <a href="https://www.ti.com/lit/ds/symlink/drv8833.pdf">(DRV8833 datasheet) </a>  to
+                                            my Artemis board to control two motors of the Force1 RC Car. This completes the assembly of the hardware 
+                                            part of my robot.</p>
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Feb 7, 2024</div>
+                                                    <div class="single-post-meta-details-date">Feb 24, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -163,12 +166,22 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Part 1</h2>
-                                            <h3>Setup for IMU</h3>
-                                            <h5>Task 1</h5>
-                                            <p>By installing the Arduino  xxxx <a href="#!">sample</a>, 
-                                            
+                                            <h2>Prelab</h2>
+                                            <h4>Setup for Motor Drivers</h4>
+                                            <p> 
+                                                According to the <a href="https://cdn.sparkfun.com/assets/5/5/1/6/3/RedBoard-Artemis-Nano.pdf">schematic</a>, 
+                                                <a href="https://cdn.sparkfun.com/assets/8/7/5/3/f/Artemis_Integration_Guide.pdf">integration guide</a>,
+                                                and currently available pins, I chose to use PIN 2,5,14,15 as output pin to output PWM signals to two 
+                                                driver boards. The intended connection is shown in Figure 1. The completed soldered board is shown in Figure 2.
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/connection_scheme.png" />
+                                            <div class="small text-gray-500">Figure 1: Connection scheme</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
+                                            <div class="small text-gray-500">Figure 2: Front and back side of soldered driver board</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_v3.png" />
+                                            <div class="small text-gray-500">Figure 3: Bracket Design for Artemis Nano, Connector, Motor Drivers</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/imu_with_battery_bracket_engr_diag_thicker_v1.png" />
+                                            <div class="small text-gray-500">Figure 4: Bracket Design for IMU and Battery</div>
                                             <h5>Task 2</h5>
                                             <p> xxxx 
                                             
