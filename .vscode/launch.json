@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "e:/暂存/小米云盘",
-      "program": "e:/暂存/小米云盘/build/Debug/outDebug",
+      "cwd": "c:/Users/18072/Desktop",
+      "program": "c:/Users/18072/Desktop/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
