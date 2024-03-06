@@ -243,7 +243,7 @@
                                             <p>
                                                 Since the two motors have different output torques, they need to be calibrated so that the robot can move in a straight line. 
                                                 The video below demonstrates applying the same pwm wave to both motors. As shown in the video, the robot veers left a little bit.</p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/shorts/YUuyr-xoZJs"> </iframe>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/YUuyr-xoZJs"> </iframe>
 
                                             <p>
                                                 This represents the output torques of right motor is larger. Therefore, I need to add a correction factor for the left motor.
@@ -251,7 +251,7 @@
                                                 car can move in a straight line, as shwon in the following video.
                                             </p>
                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/JN2oPeK0R38"> </iframe>
-                                            
+
                                             <h5>Open loop</h5>
                                             <p>
                                                 To demonstrate open-loop control of the robot, I transmitted the following commands to the robot and recorded the video.
@@ -273,11 +273,13 @@
 
                                             <h5>Lowest PWM value speed discussion</h5>
                                             <p>
-                                                To find the lowest PWM value that would keep the motor moving, I first made the car moving from rest, and then sent the lower 
-                                                value to Artemis over BLE to find the value that would stop the motor. According to the test, the lowest PWM value is xxx for 
-                                                the right motor and xxx for the left motor, as shown in the following video.
+                                                To find the lowest PWM value that would keep the motor moving, I first made the car moving from rest by using pwm value of 10000,
+                                                 and then sent the lower value to Artemis over BLE to find the value that would stop the motor. According to the test, 
+                                                 the lowest PWM value is around 7500.As shown in the video below, the cart has a pwm value of 10000 for the first 1 second,
+                                                  8000 for the next 5 seconds, 7500 for the next 5 seconds, and 7300 for the next 5 seconds (when the pwm value is 7300, 
+                                                  the cart does not move).
                                             </p>
-                                            <iframe width="450" height="450" src=> </iframe>
+                                            <iframe width="450" height="450" src="https://www.youtube.com/embed/wwVHfMH9hSw"> </iframe>
 
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
