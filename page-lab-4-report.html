@@ -192,19 +192,22 @@
 
                                             <p> I soldered the motor drivers, motors, batterym, and Artemis shown in figure 3 following the connection scheme 
                                                 shown in figure 1. Then I built the interior structure of the robot shown in figure 4 and 5 using the two brackets 
-                                                shown in figure 6 and 7.
+                                                shown in figure 6 and 7. The final appearance is shown in Figure 8. Since I realized after installing the 
+                                                internal structure that I forgot to take a picture of how the driver board is connected to the artemis, 
+                                                please refer to Figure 1 for the specific connection.
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
                                             <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
                                             <div class="small text-gray-500">Figure 4: Robot internal structure upside</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_down.jpg" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_down.jpg" />
                                             <div class="small text-gray-500">Figure 5: Robot internal structure downside</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_thicker_v5_thicker.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_thicker_v5_thicker.png" />
                                             <div class="small text-gray-500">Figure 6: Brackets Design for Artemis Nano, Connector, Motor Drivers</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/brackets_imu_switches_battery_box_v1.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/brackets_imu_switches_battery_box_v1.png" />
                                             <div class="small text-gray-500">Figure 7: Bracket Design for IMU, Switches, and Battery box </div>
-
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_external_all.jpg" />
+                                            <div class="small text-gray-500">Figure 8: Final Appearance </div>
                                             
                                             <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs:</p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwr_oscilloscope_connect.png" />
@@ -216,37 +219,46 @@
                                             <script src="https://gist.github.com/LexLin004/da6a93bcef6372d5677188e76f9417da.js"></script>
                                             <script src="https://gist.github.com/LexLin004/20ddaf051f298d83e79c70bc0b0e7ae4.js"></script>
 
-                                            <p> After burning the above code to the Artemis, I controlled the motor via BLE, as shown in the video.
-                                                4 wheels spinning as expected. First the right motor spins forward, then the left motor spins forward, 
-                                                followed by both motors spinning forward then backward together, and finally stopping.</p>
-                                            <iframe width="450" height="450" src=> </iframe>
-                                            
+                                            <p> As shown in the video, the left motor can rotate as expected by sending command via BLE from computer to artemis.
+                                                First, it rotated forward, then backward. </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/Hz0Wrq03bQM?si=_0s-hJgZCFBJovTG"> </iframe>
 
+                                            <p> Four wheels (two motors) also rotated as expected. First the right motor spins forward, then the left motor spins forward, 
+                                                followed by both motors spinning forward then backward together, and finally stopping.</p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/6SwIC-ziYcU?si=jHi5JCwNa_K92w2G"> </iframe>
+                                            
                                             <h5>Lower limit PWM value discussion</h5>
                                             <p>
-                                                To test the lower limit PWM value of the robot, I increased the PWM value from 0 until the wheels were able to start 
-                                                moving from a stationary position. I tested the motors on both sides and the lower limit values for the left and right 
-                                                motors are xxxxxxxxx and xxxxxxxxx respectively. 
+                                                To test the lower limit PWM value of the robot starting moving on the ground, and since my analogwrite resolution is 16bits, 
+                                                I can set pwm from 0 to 65525,  I increased the PWM value from 0 to 15000 until the wheels were able to start moving from 
+                                                a stationary position. The lower limit values for motors are around 8000, as shown in the video.
                                             </p>
-
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/AYqu3xILjyI?si=HSGekAQKD5SMZVJH"> </iframe>
+                                            
+                                            <p> I used the same method to test the lower limit PWM value of the robot starting turning on-axis, I increased the PWM value 
+                                                from 37000 to 50000. The lower limit values for motors are around 39300, as shown in the video. </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/TjE_6xqasHY?si=L3zslnkCzYHZ2FJP"> </iframe>
+                                           
                                             <h5>Calibration demonstration</h5>
                                             <p>
                                                 Since the two motors have different output torques, they need to be calibrated so that the robot can move in a straight line. 
-                                                The video below demonstrates applying the same pwm wave to both motors. As shown in the video, the robot  veers right.
-                                                Therefore, I need to add a correction factor for the right motor. After testing, the coefficient is 0.77. 
-                                                The correction code is shown below.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/f4410e686d5da4a4d52b3ff508e31d83.js"></script>
-                                            <p>Below is a demonstration of the robot moving 6 feet in a straight line.</p>
-                                            <iframe width="450" height="450" src=> </iframe>
+                                                The video below demonstrates applying the same pwm wave to both motors. As shown in the video, the robot veers left a little bit.</p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/shorts/YUuyr-xoZJs"> </iframe>
 
+                                            <p>
+                                                This represents the output torques of right motor is larger. Therefore, I need to add a correction factor for the left motor.
+                                                After testing, the coefficient is 1.06, since when I used 21200 for pwm of left motor, and 20000 for pwm of right motor, the
+                                                car can move in a straight line, as shwon in the following video.
+                                            </p>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/JN2oPeK0R38"> </iframe>
+                                            
                                             <h5>Open loop</h5>
                                             <p>
                                                 To demonstrate open-loop control of the robot, I transmitted the following commands to the robot and recorded the video.
-                                                The robot does what the code expects, it goes forward, then right, then left, then rotates, then back.
+                                                The robot does what the code expects, it goes forward, then back, then right, then left, then rotates clockwise, 
+                                                then rotates counter-clockwise, and finally stop.
                                             </p>
-                                            <script src="https://gist.github.com/LexLin004/f4410e686d5da4a4d52b3ff508e31d83.js"></script>
-                                            <iframe width="450" height="450" src=> </iframe>
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/7bN6Vhq3B4U"> </iframe>
 
                                             <h5>analogWrite frequency discussion</h5>
                                             <p>
