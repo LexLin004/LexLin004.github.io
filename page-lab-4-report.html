@@ -209,10 +209,17 @@
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_external_all.jpg" />
                                             <div class="small text-gray-500">Figure 8: Final Appearance </div>
                                             
-                                            <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs:</p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwr_oscilloscope_connect.png" />
-                                            <div class="small text-gray-500">Figure 7: Power supply and oscilloscope connection settings</div>
-                                            
+                                            <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs.
+                                                I connect probe to the AOUT1/BOUT1 of motor driver board and ground probe to the GND of the driver board as shown in figure 9,
+                                                 and then run the test code to make the motor rotate. The oscilloscope showed the PWM wave as shown in figure 10, and 11.
+                                            </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_connection_for_out.jpg" />
+                                            <div class="small text-gray-500">Figure 9: Power supply and oscilloscope connection settings</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomin.jpg" />
+                                            <div class="small text-gray-500">Figure 10: Oscilloscope Display Zoom in</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomout.jpg" />
+                                            <div class="small text-gray-500">Figure 11: Oscilloscope Display Zoom out</div>
+
                                             <p>I added following command to the ble_arduino.ino used in previous lab, thus I can controll the motors via BLE and computer.
                                                 The python script used is also shown below. </p>
 
@@ -268,8 +275,14 @@
                                                 generate a faster PWM signal which lead to smoother motor operation and can be used in applications that require precise 
                                                 motion to provide finer motor speed and torque control.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwm_frequency_test.jpg" />
-                                            <div class="small text-gray-500">Figure 10: PWM frequency test</div>
+                                            <p> 
+                                                However, when I connect probe to the AIN1,BIN1 of motor driver board, and run the test code to make the motor rotate. The frequency
+                                                of the pwm is 183.06Hz as shown in figure 13.
+                                            </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_connection.jpg" />
+                                            <div class="small text-gray-500">Figure 12: oscilloscope connection settings</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwm_frequency.jpg" />
+                                            <div class="small text-gray-500">Figure 13: PWM frequency test</div>
 
                                             <h5>Lowest PWM value speed discussion</h5>
                                             <p>
