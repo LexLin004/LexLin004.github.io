@@ -177,8 +177,8 @@
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/connection_scheme.png" />
                                             <div class="small text-gray-500">Figure 1: Connection scheme</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/full_connection.png" />
-                                            <div class="small text-gray-500">Figure 2: Full Connection scheme</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/fully_connection_scheme.png" />
+                                            <div class="small text-gray-500">Figure 2: Fullly Connection scheme</div>
                                             <h5>Battery Discussion</h5>
                                             <p>
                                                 In my design, I separated the motor and microcontroller power supplies to isolate the sensitive electronics 
@@ -191,31 +191,36 @@
                                             
 
                                             <p> I soldered the motor drivers, motors, batterym, and Artemis shown in figure 3 following the connection scheme 
-                                                shown in figure 1. Then I built the interior structure of the robot shown in figure 4 using the two brackets 
-                                                shown in figure 5 and 6.
+                                                shown in figure 1. Then I built the interior structure of the robot shown in figure 4 and 5 using the two brackets 
+                                                shown in figure 6 and 7.
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
                                             <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/internal_construction.png" />
-                                            <div class="small text-gray-500">Figure 4: Robot internal structure</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_v3.png" />
-                                            <div class="small text-gray-500">Figure 5: Bracket Design for Artemis Nano, Connector, Motor Drivers</div>
-                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/imu_with_battery_bracket_engr_diag_thicker_v1.png" />
-                                            <div class="small text-gray-500">Figure 6: Bracket Design for IMU and Battery</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
+                                            <div class="small text-gray-500">Figure 4: Robot internal structure upside</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_down.jpg" />
+                                            <div class="small text-gray-500">Figure 5: Robot internal structure downside</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_thicker_v5_thicker.png" />
+                                            <div class="small text-gray-500">Figure 6: Brackets Design for Artemis Nano, Connector, Motor Drivers</div>
+                                            <img class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/brackets_imu_switches_battery_box_v1.png" />
+                                            <div class="small text-gray-500">Figure 7: Bracket Design for IMU, Switches, and Battery box </div>
 
                                             
                                             <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs:</p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwr_oscilloscope_connect.png" />
                                             <div class="small text-gray-500">Figure 7: Power supply and oscilloscope connection settings</div>
                                             
-                                            <p>After buring the following code into the board, as shown on the oscilloscope, ....</p>
+                                            <p>I added following command to the ble_arduino.ino used in previous lab, thus I can controll the motors via BLE and computer.
+                                                The python script used is also shown below. </p>
 
-                                            <script src="https://gist.github.com/LexLin004/f4410e686d5da4a4d52b3ff508e31d83.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/da6a93bcef6372d5677188e76f9417da.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/20ddaf051f298d83e79c70bc0b0e7ae4.js"></script>
 
-                                            <p>By using the above code, 4 wheels spinning as expected. First the right motor spins, then the left motor spins, 
-                                                followed by both motors spinning together and finally stopping.</p>
+                                            <p> After burning the above code to the Artemis, I controlled the motor via BLE, as shown in the video.
+                                                4 wheels spinning as expected. First the right motor spins forward, then the left motor spins forward, 
+                                                followed by both motors spinning forward then backward together, and finally stopping.</p>
                                             <iframe width="450" height="450" src=> </iframe>
-
+                                            
 
                                             <h5>Lower limit PWM value discussion</h5>
                                             <p>
