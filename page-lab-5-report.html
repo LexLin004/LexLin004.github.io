@@ -171,13 +171,12 @@
                                                 new PID coefficients and robot running time and command 'MOVE_TOWARD_WALL' to control it move toward the wall.
                                                 I created a new array to store the PID values (error, integral, derivative), tof values (current distance
                                                 measured, time of current distance measured, previous distance measured, time of previous distance measured), and 
-                                                intermediate value (interpolated distance, filtered derivative value).
-                                                
+                                                intermediate value (interpolated distance, filtered derivative value). All of these value are stored in a struct,
+                                                and then stored in a struct array. 
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/connection_scheme.png" />
-                                            <div class="small text-gray-500">Figure 1: Connection scheme</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/fully_connection_scheme.png" />
-                                            <div class="small text-gray-500">Figure 2: Fullly Connection scheme</div>
+                                            <script src="https://gist.github.com/LexLin004/3a41574ae50810c73b675427cec2a63e.js"></script>
+                                            <p>In the python script, I just send the command and store the strings sent from Artemis for future analysis.</p>
+                                            <script src="https://gist.github.com/LexLin004/4f50cd4f9b08ce8a58413a0d4678a337.js"></script>
                                             <h5>Battery Discussion</h5>
                                             <p>
                                                 In my design, I separated the motor and microcontroller power supplies to isolate the sensitive electronics 
