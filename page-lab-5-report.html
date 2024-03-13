@@ -147,16 +147,14 @@
                                     <div class="single-post">
                                         <h1>Lab 5 report (Linear PID control and Linear interpolation)</h1>
                                         <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab5.html">lab </a>,
-                                            I integrated two <a href="https://www.pololu.com/product-info-merged/2130">DRV8833 Dual Motor Driver </a>
-                                             <a href="https://www.ti.com/lit/ds/symlink/drv8833.pdf">(DRV8833 datasheet) </a>  to
-                                            my Artemis board to control two motors of the Force1 RC Car. This completes the assembly of the hardware 
-                                            part of my robot.</p>
+                                            I implemented a PID control system, which uses the distance measured by the front ToF sensor, to my car to make it 
+                                            perform a task autonomously. The car will drive towards a wall and stop at a set point 300 mm from the wall.
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Feb 24, 2024</div>
+                                                    <div class="single-post-meta-details-date">Mar 13, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -167,13 +165,14 @@
                                         </div>
                                         <div class="single-post-text my-5">
                                             <h2>Prelab</h2>
-                                            <h5>Setup for Motor Drivers</h5>
+                                            <h5>Sending and Receiving Data over BLE</h5>
                                             <p> 
-                                                According to the <a href="https://cdn.sparkfun.com/assets/5/5/1/6/3/RedBoard-Artemis-Nano.pdf">schematic</a>, 
-                                                <a href="https://cdn.sparkfun.com/assets/8/7/5/3/f/Artemis_Integration_Guide.pdf">integration guide</a>,
-                                                and currently available pins, I chose to use PIN 2,5,14,15 as output pin to output PWM signals to two 
-                                                driver boards. The intended connection is shown in Figure 1. The full connection(include IMU, ToF, switches) 
-                                                is shown in Figure 2.
+                                                I built the send and receive data mechanism using code from a previous lab. I added command 'SET_PID' to set 
+                                                new PID coefficients and robot running time and command 'MOVE_TOWARD_WALL' to control it move toward the wall.
+                                                I created a new array to store the PID values (error, integral, derivative), tof values (current distance
+                                                measured, time of current distance measured, previous distance measured, time of previous distance measured), and 
+                                                intermediate value (interpolated distance, filtered derivative value).
+                                                
                                             </p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/connection_scheme.png" />
                                             <div class="small text-gray-500">Figure 1: Connection scheme</div>
