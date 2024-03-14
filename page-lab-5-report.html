@@ -226,104 +226,33 @@
 
                                             <h3>Result</h3>
 
-
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
-                                            <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
-                                            <div class="small text-gray-500">Figure 4: Robot internal structure upside</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_down.jpg" />
-                                            <div class="small text-gray-500">Figure 5: Robot internal structure downside</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_thicker_v5_thicker.png" />
-                                            <div class="small text-gray-500">Figure 6: Brackets Design for Artemis Nano, Connector, Motor Drivers</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/brackets_imu_switches_battery_box_v1.png" />
-                                            <div class="small text-gray-500">Figure 7: Bracket Design for IMU, Switches, and Battery box </div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_external_all.jpg" />
-                                            <div class="small text-gray-500">Figure 8: Final Appearance </div>
-                                            
-                                            <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs.
-                                                I connect probe to the AOUT1/BOUT1 of motor driver board and ground probe to the GND of the driver board as shown in figure 9,
-                                                 and then run the test code to make the motor rotate. The oscilloscope showed the PWM wave as shown in figure 10, and 11.
+                                            <p>
+                                                test 1
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_connection_for_out.jpg" />
-                                            <div class="small text-gray-500">Figure 9: Power supply and oscilloscope connection settings</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomin.jpg" />
-                                            <div class="small text-gray-500">Figure 10: Oscilloscope Display Zoom in</div>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/Jiu2pHKQH28"> </iframe>
+
+                                            <p>
+                                                test 2
+                                            </p>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/-ZETIZWHwjI"> </iframe>
+
+                                            <p>
+                                                test 3
+                                            </p>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/JKvy3YkQKOI"> </iframe>
+
+                                            <p>
+                                                test 4
+                                            </p>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/mnr-cNb13fw"> </iframe>
+
+
+                                           
+
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomout.jpg" />
                                             <div class="small text-gray-500">Figure 11: Oscilloscope Display Zoom out</div>
 
-                                            <p>I added following command to the ble_arduino.ino used in previous lab, thus I can controll the motors via BLE and computer.
-                                                The python script used is also shown below. </p>
-
-                                            <script src="https://gist.github.com/LexLin004/da6a93bcef6372d5677188e76f9417da.js"></script>
-                                            <script src="https://gist.github.com/LexLin004/20ddaf051f298d83e79c70bc0b0e7ae4.js"></script>
-
-                                            <p> As shown in the video, the left motor can rotate as expected by sending command via BLE from computer to artemis.
-                                                First, it rotated forward, then backward. </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/Hz0Wrq03bQM?si=_0s-hJgZCFBJovTG"> </iframe>
-
-                                            <p> Four wheels (two motors) also rotated as expected. First the right motor spins forward, then the left motor spins forward, 
-                                                followed by both motors spinning forward then backward together, and finally stopping.</p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/6SwIC-ziYcU?si=jHi5JCwNa_K92w2G"> </iframe>
                                             
-                                            <h5>Lower limit PWM value discussion</h5>
-                                            <p>
-                                                To test the lower limit PWM value of the robot starting moving on the ground, and since my analogwrite resolution is 16bits, 
-                                                I can set pwm from 0 to 65525,  I increased the PWM value from 0 to 15000 until the wheels were able to start moving from 
-                                                a stationary position. The lower limit values for motors are around 8000, as shown in the video.
-                                            </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/AYqu3xILjyI?si=HSGekAQKD5SMZVJH"> </iframe>
-                                            
-                                            <p> I used the same method to test the lower limit PWM value of the robot starting turning on-axis, I increased the PWM value 
-                                                from 37000 to 50000. The lower limit values for motors are around 39300, as shown in the video. </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/TjE_6xqasHY?si=L3zslnkCzYHZ2FJP"> </iframe>
-                                           
-                                            <h5>Calibration demonstration</h5>
-                                            <p>
-                                                Since the two motors have different output torques, they need to be calibrated so that the robot can move in a straight line. 
-                                                The video below demonstrates applying the same pwm wave to both motors. As shown in the video, the robot veers left a little bit.</p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/YUuyr-xoZJs"> </iframe>
-
-                                            <p>
-                                                This represents the output torques of right motor is larger. Therefore, I need to add a correction factor for the left motor.
-                                                After testing, the coefficient is 1.06, since when I used 21200 for pwm of left motor, and 20000 for pwm of right motor, the
-                                                car can move in a straight line, as shwon in the following video.
-                                            </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/JN2oPeK0R38"> </iframe>
-
-                                            <h5>Open loop</h5>
-                                            <p>
-                                                To demonstrate open-loop control of the robot, I transmitted the following commands to the robot and recorded the video.
-                                                The robot does what the code expects, it goes forward, then back, then right, then left, then rotates clockwise, 
-                                                then rotates counter-clockwise, and finally stop.
-                                            </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/7bN6Vhq3B4U"> </iframe>
-
-                                            <h5>analogWrite frequency discussion</h5>
-                                            <p>
-                                                The default PWM frequency for generated by analogWrite() on most Arduino models is around 490 Hz. According to the figure 10, 
-                                                the frequency on Artemis board is around 414Hz. This frequency is sufficient for a reasonable balance between efficient 
-                                                motor operation and minimal audible noise. I can manually configure the CTIMER and total counts in a PWM period to 
-                                                generate a faster PWM signal which lead to smoother motor operation and can be used in applications that require precise 
-                                                motion to provide finer motor speed and torque control.
-                                            </p>
-                                            <p> 
-                                                However, when I connect probe to the AIN1,BIN1 of motor driver board, and run the test code to make the motor rotate. The frequency
-                                                of the pwm is 183.06Hz as shown in figure 13.
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_connection.jpg" />
-                                            <div class="small text-gray-500">Figure 12: oscilloscope connection settings</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/pwm_frequency.jpg" />
-                                            <div class="small text-gray-500">Figure 13: PWM frequency test</div>
-
-                                            <h5>Lowest PWM value speed discussion</h5>
-                                            <p>
-                                                To find the lowest PWM value that would keep the motor moving, I first made the car moving from rest by using pwm value of 10000,
-                                                 and then sent the lower value to Artemis over BLE to find the value that would stop the motor. According to the test, 
-                                                 the lowest PWM value is around 7500.As shown in the video below, the cart has a pwm value of 10000 for the first 1 second,
-                                                  8000 for the next 5 seconds, 7500 for the next 5 seconds, and 7300 for the next 5 seconds (when the pwm value is 7300, 
-                                                  the cart does not move).
-                                            </p>
-                                            <iframe width="450" height="450" src="https://www.youtube.com/embed/wwVHfMH9hSw"> </iframe>
 
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
