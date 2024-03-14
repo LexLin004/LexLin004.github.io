@@ -272,6 +272,17 @@
 
                                             <p> As you can see from the above demo, my PID controller works fine at different distances without making the car hit the wall. </p>
 
+                                            <h3>Wind-up implementation and discussion</h3>
+                                            <p>I applied the prevent wind-up mechanism in the design of the PID controller, including integral term timing and integral isolation, 
+                                                as shown in the following code.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/f46c4dadf01e00b2da1ae94f245637fe.js"></script>
+                                            <p>If the mechanism of prevent wind-up is not applied, it can be expected that if the distance of the car from the wall is constant, 
+                                                the rotational speed of the motor will be faster and faster until the motor input pwm exceeds the upper limit of the motor. 
+                                                Even if the distance of the car from the wall is getting smaller, since there is no limit on the accumulated value of the integral term,
+                                                it is easy for the car to hitting the wall.
+                                            </p>
+
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
