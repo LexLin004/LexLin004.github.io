@@ -185,21 +185,47 @@
                                                 In this lab, I used the long distance mode of the tof (4m measurement distance). According to the last lab measurement,
                                                 the effective operating range of my motor is 7500-65535 (16bit analogread resolution) when the car is moving on the lab floor.
                                                 And since the output distance unit of TOF is mm, the frequency is about 85-100ms at a time, I think the coefficient of P,I,D 
-                                                should be 0.01 and below. <br>
+                                                should be 0.01 and below. 
+                                            </p>
+                                            <p>
                                                 A value of less than 0.01 prevents P*error from calculating a huge value, or a large derivative value due to a large error 
                                                 rate of change between two updates of the tof. This also reduces the effect of the millimeter-integral cumulative error 
-                                                (although I later used integral isolation). If the values of these three controllers are too large, it can lead to a crash. <br>
+                                                (although I later used integral isolation). If the values of these three controllers are too large, it can lead to a crash.
+                                            </p>
+                                            <p>
                                                 To increase the frequency of tof updates, although I didn't use setProxIntegrationTime in tof_pololu's library, I lowered 
                                                 the timing budget using setTimingBudgetInMs(50). According to the tof lab, If this value is lowered, there will be a slight
-                                                decrease in accuracy, but it is acceptable because it improves the number of times the error is corrected by the TOF value. <br>
+                                                decrease in accuracy, but it is acceptable because it improves the number of times the error is corrected by the TOF value.
+                                            </p>
+                                            <p>
                                                 The reason I chose to use a combination of P, I, and D controllers is because the P controller can influence the pwm output 
                                                 based on the current error; integral-isolated I controller prevents the car from stopping at a position that is some distance 
                                                 away from the target point, because the integral controller can accumulate value over time, which increases the PID output
                                                 and thus the pwm value, causing the motor to start spinning again; D controller can dampen rapid changes in error and reduce overshoot
                                                 when the car is a fast moving system.
                                             </p>
-
                                             
+                                            <h3>Implementation</h3>
+                                            <p>
+                                                In the code, I used curr_distance_pid and curr_time_pid to record the current distance from the wall and the time of measurement. 
+                                                I used previous_error_pid and last_time_pid to record the value and time of the last calculated error.
+                                                I used prev_distance_pid, prev_time_pid to record the distance and measurement time of the last time.
+                                                In the section of the main loop of moving toward wall, I discussed two scenarios: 1. the tof returned a reading, and 2. the tof did not return a reading.
+                                                In the first case, the current and previous distance and time are updated directly and the slope between this and the previous TOF return value is computed
+                                                to allow for the operation of interpolation in the absence of TOF return data.
+                                                In the second case, I calculate dthe interpolated distance and use this to update the current and previous distance and time.
+                                            </p>
+                                            <p>
+                                                After that, I calculated the p, i, and d value needed for the pid, and record the values into an array for subsequent sending to the computer via BLE.
+                                                I chose to use integral isolation for the integral value to prevent it from accumulating errors at the beginning of the run, which would result
+                                                 in excessive speed and hitting the wall.
+                                                 I chose to filter the derivative value using a low pass filter to get a smooth value. I chose to use linear interpolation to calculate the predicted
+                                                 distance when the tof is not ready, so as to avoid losing control of the robot.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/c96a818b8fb1634cbdef8e3092f2b8f2.js"></script>
+
+                                            <h3>Result</h3>
+
 
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
                                             <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
