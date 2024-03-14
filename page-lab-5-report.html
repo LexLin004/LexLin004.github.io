@@ -225,33 +225,52 @@
                                             <script src="https://gist.github.com/LexLin004/c96a818b8fb1634cbdef8e3092f2b8f2.js"></script>
 
                                             <h3>Result</h3>
-
+                                            <p>
+                                                In the following demo, the coefficients of PID is P:0.03,I:0.001,and D:0.05.
+                                            </p>
                                             <p>
                                                 In the video below, I demonstrate how my PID controller behaves when placing the robot 8 grids (2.4meter) from the wall. As the video shows, the car stops before hitting the wall and slowly backs up to setpoint.
+                                                
+                                                In the plot, I plotted the current distance from the wall against the current time. In this plot, the blue dots indicate all current distances and the orange "x" 
+                                                indicates the distance measured by the tof. I also plotted the current motor input versus the current time. Since I processed the motor input so that it is only 
+                                                positive. If the car needs to be rotated backwards, an int will be passed to the control_motor function so that it rotates backwards with the motor input shown in the graph.
+
                                             </p>
                                             <iframe width="560" height="315" src="https://youtube.com/embed/Jiu2pHKQH28"> </iframe>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_1_cdvsct.png" />
+                                            <div class="small text-gray-500">Figure 1:Test 1, Current Distance vs Current Time</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_1_cmivsct.png" />
+                                            <div class="small text-gray-500">Figure 2:Test 1, Current Motor Input vs Current Time</div>
 
                                             <p>
                                                 In the video below, I demonstrate how my PID controller behaves when placing the robot 9 grids (2.7meter) from the wall. As the video shows, the car stops before hitting the wall and slowly backs up to setpoint.
                                             </p>
                                             <iframe width="560" height="315" src="https://youtube.com/embed/-ZETIZWHwjI"> </iframe>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_2_cdvsct.png" />
+                                            <div class="small text-gray-500">Figure 3:Test 2, Current Distance vs Current Time</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_2_cmivsct.png" />
+                                            <div class="small text-gray-500">Figure 4:Test 2, Current Motor Input vs Current Time</div>
 
                                             <p>
                                                 In the video below, I demonstrate how my PID controller behaves when placing the robot 7.5 grids (2.3meter) from the wall. As the video shows, the car stops before hitting the wall and slowly backs up to setpoint.
                                             </p>
                                             <iframe width="560" height="315" src="https://youtube.com/embed/JKvy3YkQKOI"> </iframe>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_3_cdvsct.png" />
+                                            <div class="small text-gray-500">Figure 5:Test 3, Current Distance vs Current Time</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_3_cmivsct.png" />
+                                            <div class="small text-gray-500">Figure 6:Test 3, Current Motor Input vs Current Time</div>
 
                                             <p>
-                                                In the video below, I demonstrate how my PID controller behaves when placing the robot 3.5 grids (1meter) from the wall. As the video shows, the car stops at the setpoint and shakes for a while .                                            </p>
+                                                In the video below, I demonstrate how my PID controller behaves when placing the robot 3.5 grids (1meter) from the wall. As the video shows, the car stops at the setpoint and shakes for a while .
+                                            </p>
                                             <iframe width="560" height="315" src="https://youtube.com/embed/mnr-cNb13fw"> </iframe>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/JKvy3YkQKOI"> </iframe>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_5_cdvsct.png" />
+                                            <div class="small text-gray-500">Figure 7:Test 4, Current Distance vs Current Time</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab5_assets/plotForLab5/test_5_cmivsct.png" />
+                                            <div class="small text-gray-500">Figure 8:Test 4, Current Motor Input vs Current Time</div>
 
-
-                                           
-
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomout.jpg" />
-                                            <div class="small text-gray-500">Figure 11: Oscilloscope Display Zoom out</div>
-
-                                            
+                                            <p> As you can see from the above demo, my PID controller works fine at different distances without making the car hit the wall. </p>
 
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
