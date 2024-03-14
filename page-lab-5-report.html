@@ -181,12 +181,26 @@
                                             <h2>Lab tasks</h2>
                                             <h3>P/I/D discussion</h3>
 
-                                            <p> I soldered the motor drivers, motors, batterym, and Artemis shown in figure 3 following the connection scheme 
-                                                shown in figure 1. Then I built the interior structure of the robot shown in figure 4 and 5 using the two brackets 
-                                                shown in figure 6 and 7. The final appearance is shown in Figure 8. Since I realized after installing the 
-                                                internal structure that I forgot to take a picture of how the driver board is connected to the artemis, 
-                                                please refer to Figure 1 for the specific connection.
+                                            <p>
+                                                In this lab, I used the long distance mode of the tof (4m measurement distance). According to the last lab measurement,
+                                                the effective operating range of my motor is 7500-65535 (16bit analogread resolution) when the car is moving on the lab floor.
+                                                And since the output distance unit of TOF is mm, the frequency is about 85-100ms at a time, I think the coefficient of P,I,D 
+                                                should be 0.01 and below. <br>
+                                                A value of less than 0.01 prevents P*error from calculating a huge value, or a large derivative value due to a large error 
+                                                rate of change between two updates of the tof. This also reduces the effect of the millimeter-integral cumulative error 
+                                                (although I later used integral isolation). If the values of these three controllers are too large, it can lead to a crash. <br>
+                                                To increase the frequency of tof updates, although I didn't use setProxIntegrationTime in tof_pololu's library, I lowered 
+                                                the timing budget using setTimingBudgetInMs(50). According to the tof lab, If this value is lowered, there will be a slight
+                                                decrease in accuracy, but it is acceptable because it improves the number of times the error is corrected by the TOF value. <br>
+                                                The reason I chose to use a combination of P, I, and D controllers is because the P controller can influence the pwm output 
+                                                based on the current error; integral-isolated I controller prevents the car from stopping at a position that is some distance 
+                                                away from the target point, because the integral controller can accumulate value over time, which increases the PID output
+                                                and thus the pwm value, causing the motor to start spinning again; D controller can dampen rapid changes in error and reduce overshoot
+                                                when the car is a fast moving system.
                                             </p>
+
+                                            
+
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
                                             <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
