@@ -202,9 +202,10 @@
                                                 The yaw calculating from quaternion data (after it is stable or about 1 minute after IMU start)
                                                  has only a few degrees of drift, 
                                                 even when the car is at rest for more than 10 minutes. And, when shaking and rotating the car (applying noise), 
-                                                the resulting angle is more accurate.
+                                                the resulting angle is more accurate. Since this method takes some time to get a stable yaw value, I added a 
+                                                function stable_IMU() to determine if the yaw is stable and use it for setup().
                                             </p>
-
+                                            <script src="https://gist.github.com/LexLin004/d29d2d1683fbbb1dc8059c0f173feaae.js"></script>
                                             <p>
                                                 Since I use 'ICM_20948_USE_DMP', according to line 1551 in the 
                                                 <a href="https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/main/src/ICM_20948.cpp"> ICM_20948.cpp  </a>,
@@ -235,12 +236,34 @@
                                                 This low pass filter also helped me to smooth out the noise when integrating the yaw speed.
                                             </p>
 
+                                            <h2>PID discussion</h2>
+                                            <p>
+                                                In this lab, I used PID controller. According to previous lab, the effective operating range of my motor is 
+                                                17000-65535 (16bit analogread resolution) when the car is rotating on the lab floor. The unit of yaw
+                                                returned by my get_euler_angle function is degree, and the frequency is 16.5ms. I think the coefficient 
+                                                of P should be < 0.5, I should be < 0.1 and > 0.1, D should be < 0.5.
+                                                I assume the output of the PID is smaller than 50, and than map the pid output to pwm by using 
+                                                mapFloatToFloat(pwm (or -1*pwm), 0, 36, 17000, 65535). 
+                                            </p>
+                                            <p> I chose to use a combination of P, I, and D controllers is because
+                                                the P controller can influence the pwm output based on the current error;
+                                                integral-isolated I controller prevents the car from stopping at a position 
+                                                that is some angles away from the target yaw; the D controller can dampen 
+                                                rapid changes in error and reduce overshoot when the car is rotating rapidly.
+                                            </p>
+
+                                            <p>
+
                                             <h2>Programming Implementation</h2>
                                             <p>I designed the commands to control the PID and run the rotation to the specified angle separately. 
                                                 After completing the rotation to the specified angle, the program will send the data generated 
                                                 by the adjustment process to the computer via BLE for subsequent analysis.
                                             </p>
-                                            
+                                            <script src="https://gist.github.com/LexLin004/056a68aab2b481be727dc7c829adf770.js"></script>
+
+                                            <p>In the , I used curr_distance_pid and curr_time_pid to record the current distance from the wall and the time of measurement. I used previous_error_pid and last_time_pid to record the value and time of the last calculated error. I used prev_distance_pid, prev_time_pid to record the distance and measurement time of the last time. In the section of the main loop of moving toward wall, I discussed two scenarios: 1. the tof returned a reading, and 2. the tof did not return a reading. In the first case, the current and previous distance and time are updated directly and the slope between this and the previous TOF return value is computed to allow for the operation of interpolation in the absence of TOF return data. In the second case, I calculate dthe interpolated distance and use this to update the current and previous distance and time.
+
+                                            </p>
                                             <p>I added a counter to my rotate to specific angle function, and when the counter reaches an internal
                                                 value (say 1000), it changes the global variables Kp_rotate, Ki_rotate, Kd_rotate, and setpoint.
                                                 This enables the PID to be changed while the controller is running. In future navigation applications,
