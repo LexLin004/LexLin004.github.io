@@ -165,53 +165,77 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Prelab</h2>
+                                            <h2>Communication between Artemis and Computer</h2>
                                             <h5>Sending and Receiving Data over BLE</h5>
                                             <p> 
-                                                I built the send and receive data mechanism using code from a previous lab. I added command 'SET_PID' to set 
-                                                new PID coefficients and robot running time and command 'MOVE_TOWARD_WALL' to control it move toward the wall.
-                                                I created a new array to store the PID values (error, integral, derivative), tof values (current distance
-                                                measured, time of current distance measured, previous distance measured, time of previous distance measured), and 
-                                                intermediate value (interpolated distance, filtered derivative value). All of these value are stored in a struct,
-                                                and then stored in a struct array. 
+                                                I used a similar approach to data transfer as in<a href="page-lab-5-report.html"> lab 5</a>.
                                             </p>
-                                            <script src="https://gist.github.com/LexLin004/3a41574ae50810c73b675427cec2a63e.js"></script>
-                                            <p>In the python script, I just send the command and store the strings sent from Artemis for future analysis.</p>
-                                            <script src="https://gist.github.com/LexLin004/4f50cd4f9b08ce8a58413a0d4678a337.js"></script>
-
-                                            <h2>Lab tasks</h2>
-                                            <h3>P/I/D discussion</h3>
-
-                                            <p> I soldered the motor drivers, motors, batterym, and Artemis shown in figure 3 following the connection scheme 
-                                                shown in figure 1. Then I built the interior structure of the robot shown in figure 4 and 5 using the two brackets 
-                                                shown in figure 6 and 7. The final appearance is shown in Figure 8. Since I realized after installing the 
-                                                internal structure that I forgot to take a picture of how the driver board is connected to the artemis, 
-                                                please refer to Figure 1 for the specific connection.
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/driver_frontback.jpg" />
-                                            <div class="small text-gray-500">Figure 3: Front and back side of soldered driver board</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_up.jpg" />
-                                            <div class="small text-gray-500">Figure 4: Robot internal structure upside</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_internal_down.jpg" />
-                                            <div class="small text-gray-500">Figure 5: Robot internal structure downside</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/all_fit_fast_robot_internal_engr_diag_thicker_v5_thicker.png" />
-                                            <div class="small text-gray-500">Figure 6: Brackets Design for Artemis Nano, Connector, Motor Drivers</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/brackets_imu_switches_battery_box_v1.png" />
-                                            <div class="small text-gray-500">Figure 7: Bracket Design for IMU, Switches, and Battery box </div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/car_external_all.jpg" />
-                                            <div class="small text-gray-500">Figure 8: Final Appearance </div>
                                             
-                                            <p>To test the connection to Artemis' dual motor drivers, I used a 850mah battery as the driver's input and an oscilloscope to read the driver's inputs and outputs.
-                                                I connect probe to the AOUT1/BOUT1 of motor driver board and ground probe to the GND of the driver board as shown in figure 9,
-                                                 and then run the test code to make the motor rotate. The oscilloscope showed the PWM wave as shown in figure 10, and 11.
+                                            <h2>PID Input Signal</h2>
+                                            <h3>Orientation Estimation</h3>
+                                            <p> 
+                                                I first tried to use the method provided in the lecture to calculate the yaw value using the magX, magY 
+                                                data from IMU and the pitch and roll data after filtering and colibrated.
+                                                However, in testing I found that rotating the car can make the yaw value change, but when the car 
+                                                stops moving, the yaw value returns to the initial value.                                                
+                                                This could be because the wrong magnetic field values were used or because the imu was mounted 
+                                                close to the battery and motor, causing the magnetic field readings to be affected.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_connection_for_out.jpg" />
-                                            <div class="small text-gray-500">Figure 9: Power supply and oscilloscope connection settings</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomin.jpg" />
-                                            <div class="small text-gray-500">Figure 10: Oscilloscope Display Zoom in</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab4_assets/osci_display_out_zoomout.jpg" />
-                                            <div class="small text-gray-500">Figure 11: Oscilloscope Display Zoom out</div>
+                                            <script src="https://gist.github.com/LexLin004/04a29180bd2843323fd21a453ddb9750.js"></script>
+                                            
 
+                                            <p>
+                                                I then tried to just integrate the yaw speed from the gyro measurements, 
+                                                but it drifted at one degree in two seconds, even though the car was stationary. 
+                                                The data was completely unusable. I minimized the effects of drift by calculating the average 
+                                                drift (drift angle per second) and subtracting the average drift each time I got yaw. The final one minute drift was about 3 degrees.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/76287d13fabc0fbf9fdcf8a478c43ec6.js"></script>
+
+                                            <p>
+                                                Finally, I chose to use digital motion processor data from the ICM-20948's FIFO buffer.
+                                                The program used the quaternion data to calculate the yaw angle. The function I used is provided in 
+                                                Example7_DMP_Quat6_EulerAngles of  
+                                                <a href="https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/main/examples/Arduino/Example7_DMP_Quat6_EulerAngles/Example7_DMP_Quat6_EulerAngles.ino">
+                                                    Sparkfun 9DoF IMU library
+                                                </a>. 
+                                                The yaw calculating from quaternion data (after it is stable or about 1 minute after IMU start)
+                                                 has only a few degrees of drift, 
+                                                even when the car is at rest for more than 10 minutes. And, when shaking and rotating the car (applying noise), 
+                                                the resulting angle is more accurate.
+                                            </p>
+
+                                            <p>
+                                                Since I use 'ICM_20948_USE_DMP', according to line 1551 in the 
+                                                <a href="https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/main/src/ICM_20948.cpp"> ICM_20948.cpp  </a>,
+                                                the gyro full scale range is set to +-2000 dps (degree per second). 
+                                                I think this will be sufficient for our application, as cars do not rotate at speeds of up to 6 revolutions per second.    
+                                            </p>
+
+                                            <h2>Derivative Term</h2>
+                                            <p>
+                                                Although the derivative term in the PID system is integrated from gryo_z, it is still reasonable to use it. 
+                                                It is easier to compute the derivative of the current error and previous error with respect to corresponding
+                                                time than it is to compute the  sum of gryo_z between the current time and the previous time. 
+                                                Also, there are about 16ms between each IMU data in my program, it is not accurate to use only the gryo_z
+                                                to calculate the derivative term and it is complicate to add extrapolation on gyro_z data.
+                                            </p>
+                                            <p>
+                                                Although the derivative term in the PID system is integrated from gryo_z, it is still reasonable to use it. 
+                                                It is easier to compute the derivative of the current error and previous error with respect to corresponding
+                                                time than it is to compute the  sum of gryo_z between the current time and the previous time. 
+                                                Also, there are about 16ms between each IMU data in my program, it is not accurate to use only the gryo_z
+                                                to calculate the derivative term and it is complicate to add extrapolation on gyro_z data.
+                                            </p>
+                                            <p>
+                                                Although the derivative term in the PID system is integrated from gryo_z, it is still reasonable to use it. 
+                                                It is easier to compute the derivative of the current error and previous error with respect to corresponding
+                                                time than it is to compute the  sum of gryo_z between the current time and the previous time. 
+                                                Also, there are about 16ms between each IMU data in my program, it is not accurate to use only the gryo_z
+                                                to calculate the derivative term and it is complicate to add extrapolation on gyro_z data.
+                                            </p>
+
+                                            
                                             <p>I added following command to the ble_arduino.ino used in previous lab, thus I can controll the motors via BLE and computer.
                                                 The python script used is also shown below. </p>
 
