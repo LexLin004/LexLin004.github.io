@@ -304,9 +304,11 @@
                                             <div class="small text-gray-500">Figure 2:Test 1, Current Motor Input vs Current Time</div>
 
                                             <h2>Wind-up implementation and discussion</h2>
-                                            <p>I applied the prevent wind-up mechanism in the design of the PID controller, including integral 
-                                                term constrain and integral isolation, as shown in the following code.</p>
-                                            
+                                            <p>
+                                                I applied the prevent wind-up mechanism in the design of the PID controller, including integral 
+                                                term constrain and integral isolation, as shown in the following code.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/accc04597d0489ceb71f5a9852ed81ca.js"></script>
                                             <p>
                                                 If the mechanism to prevent wind-up is not used and the difference between the yaw error and
                                                 the set value does not change, the car will rotate faster and faster until the motor input pwm
