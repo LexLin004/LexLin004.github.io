@@ -247,12 +247,10 @@
                                             </p>
                                             <p> I chose to use a combination of P, I, and D controllers is because
                                                 the P controller can influence the pwm output based on the current error;
-                                                integral-isolated I controller prevents the car from stopping at a position 
-                                                that is some angles away from the target yaw; the D controller can dampen 
-                                                rapid changes in error and reduce overshoot when the car is rotating rapidly.
+                                                the integral-isolated I controller prevents the car from stopping at a position 
+                                                that is some angles away from the target yaw; 
+                                                the D controller can dampen rapid changes in error and reduce overshoot when the car is rotating rapidly.
                                             </p>
-
-                                            <p>
 
                                             <h2>Programming Implementation</h2>
                                             <p>I designed the commands to control the PID and run the rotation to the specified angle separately. 
@@ -261,9 +259,28 @@
                                             </p>
                                             <script src="https://gist.github.com/LexLin004/056a68aab2b481be727dc7c829adf770.js"></script>
 
-                                            <p>In the , I used curr_distance_pid and curr_time_pid to record the current distance from the wall and the time of measurement. I used previous_error_pid and last_time_pid to record the value and time of the last calculated error. I used prev_distance_pid, prev_time_pid to record the distance and measurement time of the last time. In the section of the main loop of moving toward wall, I discussed two scenarios: 1. the tof returned a reading, and 2. the tof did not return a reading. In the first case, the current and previous distance and time are updated directly and the slope between this and the previous TOF return value is computed to allow for the operation of interpolation in the absence of TOF return data. In the second case, I calculate dthe interpolated distance and use this to update the current and previous distance and time.
-
+                                            <p>
+                                                In the code, I use curr_imu_yaw and curr_time_yaw to record the angle between the current and initial state;
+                                                prev_imu_yaw and prev_time_yaw to record the last yaw and time of measurement; 
+                                                error_yaw, prev_error_yaw are used to record the value and time of the last error and measurement; 
+                                                last_imu_yaw and last_time_imu_yaw are used to record the last yaw value and time returned by the imu.
                                             </p>
+                                            <p>
+                                                In main loop of rotating to the specified angle, I discuss two cases: 1. imu returns a reading; 
+                                                2. imu does not return a reading. In the first case, it updates the yaw and time of current and previous, 
+                                                and calculate the slope between the current and last IMU return values to perform the extrapolation operation 
+                                                without the IMU return data. In the second case, I will compute the extrapolated yaw and use that to update 
+                                                the current and previous yaw and time.
+                                            </p>
+
+                                            <p>
+                                                Then, I calculated the p, i, and d values and recorded those values into an array. I chose to use integral 
+                                                isolation for the integral terms to prevent it from accumulating error at the beginning of rotating, which
+                                                 would result in rotating too fast and exceeding the target yaw. i chose to filter the derivative values 
+                                                 using a low-pass filter to obtain smooth values. I chose to use linear interpolation to calculate the 
+                                                 predicted yaw when the IMU is not ready in order to avoid losing control of the robot.
+                                            </p>
+
                                             <p>I added a counter to my rotate to specific angle function, and when the counter reaches an internal
                                                 value (say 1000), it changes the global variables Kp_rotate, Ki_rotate, Kd_rotate, and setpoint.
                                                 This enables the PID to be changed while the controller is running. In future navigation applications,
@@ -275,7 +292,21 @@
                                                 moves back and forth, I need to add the pid output for each motor for rotation and the pid output 
                                                 for each motor for moving toward target and pass it to the motors.
                                             </p>
+
+                                            <h2>Result</h2>
+
+
+
+                                            <h2>Wind-up implementation and discussion</h2>
+                                            <p>I applied the prevent wind-up mechanism in the design of the PID controller, including integral 
+                                                term constrain and integral isolation, as shown in the following code.</p>
                                             
+                                            <p>
+                                                If the mechanism to prevent wind-up is not used and the difference between the yaw error and
+                                                the set value does not change, the car will rotate faster and faster until the motor input pwm
+                                                exceeds the upper limit of the motor, and the car can easily rotate beyond the target yaw value
+                                                without being able to stop.
+                                            </p>
                                         
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
