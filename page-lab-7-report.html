@@ -145,7 +145,9 @@
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
-                                        <h1>Lab 7 report (Kalman Filter)</h1>
+                                        <h1>Lab 7 report (Kalman Filter) <br>
+                                            According to this <a href="https://fastrobotscornell.github.io/FastRobots/Grading.html">policy,</a>
+                                            I would like to use the 1 one-week extension on this lab, thanks!</h1>
                                         <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab7.html">lab </a>,
                                             I implemented a Kalman filter to my system, which is used to supplement the slowly sampled ToF values. 
                                             Thus, the car can drive to the wall with higher speed and perform other operation(stop/turn) in time. 
@@ -170,11 +172,11 @@
                                                 To keep the car moving in a straight line, the right motor input is 37095 and the left motor input is 39321.
                                                  Then, I made the car drive toward the wall at this speed for 2 seconds. The following are the related plots.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_dist_50ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_dist_50ms_2000ms_60_21_mpers.png" />
                                             <div class="small text-gray-500">Figure 1: TOF sensor output</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_vel_50ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_speed_50ms_2000ms_60_21_mpers.png" />
                                             <div class="small text-gray-500">Figure 2: Computed speed</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_motor_50ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_motor_50ms_2000ms_60_21_mpers.png" />
                                             <div class="small text-gray-500">Figure 3: Motor input</div>
 
                                             <p> When the time budget was 20ms, I passed the same command to the car and recorded the data.</p>
@@ -199,6 +201,10 @@
                                                 <br><br> The <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>=</mo><mn>3.4965</mn><mo>&#xd7;</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>
                                                  and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>=</mo><mn>1.7425</mn><mo>&#xd7;</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>
                                             </p>
+                                            <p>
+                                                Thus, I can build the state space equation: <br>
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mfenced open="[" close="]"><mtable><mtr><mtd><mover accent='true'><mi>x</mi><mo>&#x2d9;</mo></mover></mtd></mtr><mtr><mtd><mover accent='true'><mi>x</mi><mo>&#xa8;</mo></mover></mtd></mtr></mtable></mfenced><mo>=</mo><mfenced open="[" close="]"><mtable><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mo>-</mo><mfrac><mi>d</mi><mi>m</mi></mfrac></mtd></mtr></mtable></mfenced><mfenced open="[" close="]"><mtable><mtr><mtd><mi>x</mi></mtd></mtr><mtr><mtd><mover accent='true'><mi>x</mi><mo>&#x2d9;</mo></mover></mtd></mtr></mtable></mfenced><mo>+</mo><mfenced open="[" close="]"><mtable><mtr><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mfrac><mn>1</mn><mi>m</mi></mfrac></mtd></mtr></mtable></mfenced><mi>u</mi><mspace linebreak="newline"/><mo>,</mo><mo>&#xA0;</mo><mi>C</mi><mo>=</mo><mfenced open="[" close="]"><mtable><mtr><mtd><mo>-</mo><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr></mtable></mfenced></math>
+                                            </p>
 
                                             <h2>Initialize KF (Python)</h2>
                                             <p> 
@@ -212,141 +218,7 @@
                                             <p>
                                                 Thus, I initialize my Kalman filter in python as following:
                                             </p>
-                                            <script src="https://gist.github.com/LexLin004/04a29180bd2843323fd21a453ddb9750.js"></script>
                                             
-
-                                            <p>
-                                                I then tried to just integrate the yaw speed from the gyro measurements, 
-                                                but it drifted at one degree in two seconds, even though the car was stationary. 
-                                                The data was completely unusable. I minimized the effects of drift by calculating the average 
-                                                drift (drift angle per second) and subtracting the average drift each time I got yaw. The final one minute drift was about 3 degrees.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/76287d13fabc0fbf9fdcf8a478c43ec6.js"></script>
-
-                                            <p>
-                                                Finally, I chose to use digital motion processor data from the ICM-20948's FIFO buffer.
-                                                The program used the quaternion data to calculate the yaw angle. The function I used is provided in 
-                                                Example7_DMP_Quat6_EulerAngles of  
-                                                <a href="https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/main/examples/Arduino/Example7_DMP_Quat6_EulerAngles/Example7_DMP_Quat6_EulerAngles.ino">
-                                                    Sparkfun 9DoF IMU library
-                                                </a>. 
-                                                The yaw calculating from quaternion data (after it is stable or about 1 minute after IMU start)
-                                                 has only a few degrees of drift, 
-                                                even when the car is at rest for more than 10 minutes. And, when shaking and rotating the car (applying noise), 
-                                                the resulting angle is more accurate. Since this method takes some time to get a stable yaw value, I added a 
-                                                function stable_IMU() to determine if the yaw is stable and use it for setup().
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/d29d2d1683fbbb1dc8059c0f173feaae.js"></script>
-                                            <p>
-                                                Since I use 'ICM_20948_USE_DMP', according to line 1551 in the 
-                                                <a href="https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/main/src/ICM_20948.cpp"> ICM_20948.cpp  </a>,
-                                                the gyro full scale range is set to +-2000 dps (degree per second). 
-                                                I think this will be sufficient for our application, as cars do not rotate at speeds of up to 6 revolutions per second.    
-                                            </p>
-
-                                            <h2>Derivative Term</h2>
-                                            <p>
-                                                Although the derivative term in the PID system is integrated from gryo_z, it is still reasonable to use it. 
-                                                It is easier to compute the derivative of the current error and previous error with respect to corresponding
-                                                time than it is to compute the  sum of gryo_z between the current time and the previous time. 
-                                                Also, there are about 16ms between each IMU data in my program, it is not accurate to use only the gryo_z
-                                                to calculate the derivative term and it is complicate to add extrapolation on gyro_z data.
-                                            </p>
-                                            <p>
-                                                Considering the need to change the target yaw while the car is running, and the implementation
-                                                 of my program, this operation causes a derivative kick. This is because my derivative term relies on 
-                                                 calculating the rate of change between the error at this time and the error at the previous time. 
-                                                 I think using the method provided by 
-                                                 <a href="http://brettbeauregard.com/blog/2011/04/improving-the-beginner%E2%80%99s-pid-derivative-kick/">
-                                                    'Improving the Beginner's PID'
-                                                 </a> can effectively eliminate the derivative kick. However, I did not use this method for npw, 
-                                                 but attenuated the effect through a low-pass filter.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/f9bfadc299fbc425ac93844cde497caa.js"></script>
-                                            <p>
-                                                This low pass filter also helped me to smooth out the noise when integrating the yaw speed.
-                                            </p>
-
-                                            <h2>PID discussion</h2>
-                                            <p>
-                                                In this lab, I used PID controller. According to previous lab, the effective operating range of my motor is 
-                                                17000-65535 (16bit analogread resolution) when the car is rotating on the lab floor. The unit of yaw
-                                                returned by my get_euler_angle function is degree, and the frequency is 16.5ms. I think the coefficient 
-                                                of P should be < 0.5, I should be < 0.1 and > 0.1, D should be < 0.5.
-                                                I assume the output of the PID is smaller than 50, and than map the pid output to pwm by using 
-                                                mapFloatToFloat(pwm (or -1*pwm), 0, 36, 17000, 65535). 
-                                            </p>
-                                            <p> I chose to use a combination of P, I, and D controllers is because
-                                                the P controller can influence the pwm output based on the current error;
-                                                the integral-isolated I controller prevents the car from stopping at a position 
-                                                that is some angles away from the target yaw; 
-                                                the D controller can dampen rapid changes in error and reduce overshoot when the car is rotating rapidly.
-                                            </p>
-
-                                            <h2>Programming Implementation</h2>
-                                            <p>I designed the commands to control the PID and run the rotation to the specified angle separately. 
-                                                After completing the rotation to the specified angle, the program will send the data generated 
-                                                by the adjustment process to the computer via BLE for subsequent analysis.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/056a68aab2b481be727dc7c829adf770.js"></script>
-
-                                            <p>
-                                                In the code, I use curr_imu_yaw and curr_time_yaw to record the angle between the current and initial state;
-                                                prev_imu_yaw and prev_time_yaw to record the last yaw and time of measurement; 
-                                                error_yaw, prev_error_yaw are used to record the value and time of the last error and measurement; 
-                                                last_imu_yaw and last_time_imu_yaw are used to record the last yaw value and time returned by the imu.
-                                            </p>
-                                            <p>
-                                                In main loop of rotating to the specified angle, I discuss two cases: 1. imu returns a reading; 
-                                                2. imu does not return a reading. In the first case, it updates the yaw and time of current and previous, 
-                                                and calculate the slope between the current and last IMU return values to perform the extrapolation operation 
-                                                without the IMU return data. In the second case, I will compute the extrapolated yaw and use that to update 
-                                                the current and previous yaw and time.
-                                            </p>
-
-                                            <p>
-                                                Then, I calculated the p, i, and d values and recorded those values into an array. I chose to use integral 
-                                                isolation for the integral terms to prevent it from accumulating error at the beginning of rotating, which
-                                                 would result in rotating too fast and exceeding the target yaw. i chose to filter the derivative values 
-                                                 using a low-pass filter to obtain smooth values. I chose to use linear interpolation to calculate the 
-                                                 predicted yaw when the IMU is not ready in order to avoid losing control of the robot.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/a1bfeff3a8f60e966a16fdf11907ba1f.js"></script>
-
-                                            <p>I added a counter to my rotate to specific angle function, and when the counter reaches an internal
-                                                value (say 1000), it changes the global variables Kp_rotate, Ki_rotate, Kd_rotate, and setpoint.
-                                                This enables the PID to be changed while the controller is running. In future navigation applications,
-                                                a similar approach can be used when other functions want to change the PID value or setpoint.
-                                            </p>
-                                            
-                                            <p>
-                                                To make it easier in the future to implement the ability to modify the direction when the robot 
-                                                moves back and forth, I need to add the pid output for each motor for rotation and the pid output 
-                                                for each motor for moving toward target and pass it to the motors.
-                                            </p>
-
-                                            <h2>Result</h2>
-                                            <p>
-                                                I set the setPoint as 30 degrees. And push the robot twice during the program running.
-                                            </p>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/LWsfKLZLYpg?si=-8es2SVg2ILxYrcf" > </iframe>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab6_assets/cyct_test1.png" />
-                                            <div class="small text-gray-500">Figure 1:Test 1, Current yaw vs Current Time</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab6_assets/cmict_test1.png" />
-                                            <div class="small text-gray-500">Figure 2:Test 1, Current Motor Input vs Current Time</div>
-
-                                            <h2>Wind-up implementation and discussion</h2>
-                                            <p>
-                                                I applied the prevent wind-up mechanism in the design of the PID controller, including integral 
-                                                term constrain and integral isolation, as shown in the following code.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/accc04597d0489ceb71f5a9852ed81ca.js"></script>
-                                            <p>
-                                                If the mechanism to prevent wind-up is not used and the difference between the yaw error and
-                                                the set value does not change, the car will rotate faster and faster until the motor input pwm
-                                                exceeds the upper limit of the motor, and the car can easily rotate beyond the target yaw value
-                                                without being able to stop.
-                                            </p>
                                         
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
