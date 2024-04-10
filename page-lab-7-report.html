@@ -180,11 +180,11 @@
                                             <div class="small text-gray-500">Figure 3: Motor input</div>
 
                                             <p> When the time budget was 20ms, I passed the same command to the car and recorded the data.</p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test3_dist_20ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_dist_20ms_2000ms_60_mpers.png" />
                                             <div class="small text-gray-500">Figure 4: TOF sensor output</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test3_vel_20ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_speed_20ms_2000ms_60_mpers.png" />
                                             <div class="small text-gray-500">Figure 5: Computed speed</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test3_motor_20ms_2000ms_60_21.png" />
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_motor_20ms_2000ms_60_mpers.png" />
                                             <div class="small text-gray-500">Figure 6: Motor input</div>
                                             
                                             <p> All data are recorded in a CSV for future use.</p>
@@ -193,13 +193,14 @@
                                                 the data generated from the 50 ms time budget.
 
                                                 According to the figure 2, the speed at steady state is -2.86m/sec.
-                                                The 90% rise time is 1.1475ms(from 0.625s to 1.9s) and the speed at this 90% rise time is 2.8m/sec.
+                                                The 90% rise time is 1.1475s(from 0.625s to 1.9s) and the speed at this 90% rise time is 2.8m/sec.
+                                                The car drived at PWM = 39321, which is 39321/65535 = 0.6 of max speed. Thus, <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>u</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub><mo>=</mo><mn>0.6</mn></math>.
                                                 According to the formulas, 
-                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>=</mo><mfrac><mrow><msub><mi>u</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub></mrow><mrow><msub><mover accent='true'><mi>x</mi><mo>&#x2d9;</mo></mover><mrow><mi>s</mi><mi>s</mi></mrow></msub></mrow></mfrac><mo>&#x2248;</mo><mfrac><mn>1</mn><mrow><mn>2860</mn><mi>m</mi><mi>m</mi><mo>/</mo><mi>s</mi></mrow></mfrac></math>
-                                                 and
-                                                 <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>=</mo><mfrac><mrow><mo>-</mo><mi>d</mi><mi>t</mi></mrow><mrow><mi>ln</mi><mo>(</mo><mn>1</mn><mo>-</mo><mi>d</mi><mi>v</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>0.00034965</mn><mo>&#xd7;</mo><mn>1.1475</mn></mrow><mrow><mi>ln</mi><mo>(</mo><mn>1</mn><mo>-</mo><mn>0.9</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mn>1.7425</mn><mo>&#xd7;</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>.
-                                                <br><br> The <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>=</mo><mn>3.4965</mn><mo>&#xd7;</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>
-                                                 and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>=</mo><mn>1.7425</mn><mo>&#xd7;</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>=</mo><mfrac><mrow><msub><mi>u</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub></mrow><mrow><msub><mi>x</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub></mrow></mfrac><mo>=</mo><mfrac><mn>0.6</mn><mrow><mn>2.86</mn><mi>m</mi><mo>/</mo><mi>s</mi></mrow></mfrac><mo>&#x2248;</mo><mn>0.20979</mn><mi>s</mi><mo>/</mo><mi>m</mi></math>
+                                                <br>
+                                                and 
+                                                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>=</mo><mfrac><mrow><mo>-</mo><mi>d</mi><mi>t</mi></mrow><mrow><mi>ln</mi><mfenced><mrow><mn>1</mn><mo>-</mo><mi>d</mi><mi>v</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mfenced></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mfrac><mn>0.6</mn><mrow><mn>2.86</mn><mi>m</mi><mo>/</mo><mi>s</mi></mrow></mfrac><mo>&#xd7;</mo><mn>1.1475</mn><mi>s</mi></mrow><mrow><mi>ln</mi><mo>(</mo><mn>1</mn><mo>-</mo><mn>0.9</mn><mo>)</mo></mrow></mfrac><mo>&#x2248;</mo><mn>0.10455</mn></math>
+                                                .
                                             </p>
                                             <p>
                                                 Thus, I can build the state space equation: <br>
