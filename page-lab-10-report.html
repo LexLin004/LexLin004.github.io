@@ -145,18 +145,16 @@
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
-                                        <h1>Lab 7 report (Kalman Filter) <br>
-                                            According to this <a href="https://fastrobotscornell.github.io/FastRobots/Grading.html">policy,</a>
-                                            I would like to use the 1 one-week extension on this lab, thanks!</h1>
-                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab7.html">lab </a>,
-                                            I implemented a Kalman filter to my system, which is used to supplement the slowly sampled ToF values. 
-                                            Thus, the car can drive to the wall with higher speed and perform other operation(stop/turn) in time. 
+                                        <h1>Lab 9 report (Mapping)</h1>
+                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab9.html">lab </a>,
+                                            In this lab, I use a fully assembled robot to rotate at specific maker positions 
+                                            by using orientation-based PID control and collect two tof data from the robot to map a static room.
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Mar 27, 2024</div>
+                                                    <div class="single-post-meta-details-date">Apr 16, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -166,75 +164,65 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Estimate drag and momentum</h2>
+                                            <h2>Control</h2>
                                             <p> 
-                                                To build the state space model of the system, I first set the car's speed to 60%(about 39321) of max speed(65535).
-                                                To keep the car moving in a straight line, the right motor input is 37095 and the left motor input is 39321.
-                                                 Then, I made the car drive toward the wall at this speed for 2 seconds. The following are the related plots.
+                                                Because the tof would report an error output if it was taking a reading when its distance from the object varied too much,
+                                                 I chose to use method two, Orientation control.
+                                                 In this method, I used a PID controller to control the robot to rotate 10 degrees and then come to a standstill, 
+                                                 then measured the data 10 times using sensors mounted on the front and left side of the robot, and repeated 36 times.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_dist_50ms_2000ms_60_21_mpers.png" />
-                                            <div class="small text-gray-500">Figure 1: TOF sensor output</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_speed_50ms_2000ms_60_21_mpers.png" />
-                                            <div class="small text-gray-500">Figure 2: Computed speed</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test1_motor_50ms_2000ms_60_21_mpers.png" />
-                                            <div class="small text-gray-500">Figure 3: Motor input</div>
-
-                                            <p> When the time budget was 20ms, I passed the same command to the car and recorded the data.</p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_dist_20ms_2000ms_60_mpers.png" />
-                                            <div class="small text-gray-500">Figure 4: TOF sensor output</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_speed_20ms_2000ms_60_mpers.png" />
-                                            <div class="small text-gray-500">Figure 5: Computed speed</div>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/test2_motor_20ms_2000ms_60_mpers.png" />
-                                            <div class="small text-gray-500">Figure 6: Motor input</div>
                                             
-                                            <p> All data are recorded in a CSV for future use.</p>
+                                            <h2>ToF Data Collection</h2>
                                             <p>
-                                                As shown in Figure 5, the measurements generated from the 20 ms time budget fluctuate too much. Thus, I will build a Kalman filter using 
-                                                the data generated from the 50 ms time budget.
+                                                The program controls the ToF sensor to collect data 10 times while the robot is stationary at an angle and stores them in an array as 
+                                                struct 'DataPointTOF'. The 'dataPointTOF' contains the readings of tof1, the readings of tof2, the current angle, and the timestamp. 
+                                                The final array will be sent to the computer via BLE. My python script then splits the received array into tof1 and tof2 based on the
+                                                current angle, then remove the maximum and minimum values of each tof reading at the same angle and average the remaining values to 
+                                                form the final array: [(tof1_average, tof2_average, current_yaw), ...]. ...] .
+                                            </p>
+                                            <h2>Code</h2>
+                                            <p>
+                                                I use two commands: set_pid_imu and rotate_a_circle. The set_pid_imu allows me to easily adjust the parameters of the pid controller,
+                                                and the length of time for each rotation of 10 degrees to be performed. The rotate_a_circle controls the behavior of the robot as 
+                                                it starts to rotate 36 times through 10 degrees and collects tof readings, and returns the collected tof data via Bluetooth.
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/40815e1778463ea517c664ec997b0c90.js"></script>
 
-                                                According to the figure 2, the speed at steady state is -2.86m/sec.
-                                                The 90% rise time is 1.1475s(from 0.625s to 1.9s) and the speed at this 90% rise time is 2.8m/sec.
-                                                The car drived at PWM = 39321, which is 39321/65535 = 0.6 of max speed. Thus, <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>u</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub><mo>=</mo><mn>0.6</mn></math>.
-                                                According to the formulas, I can calculate d and m.
-                                                <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/d_and_m.png" />
-
+                                            <h3>Single Rotate Demo</h3>
+                                            <p>Video</p>
+                                            <p>Plot of motor input and yaw measured</p>
+                                            <h3>Continuous Rotate Demo</h3>
+                                            <p>Video</p>
+                                            <p>Tof Data Demo</p>
+                                            <p>Tof Data After Avg.</p>
+                                        
+                                            <h2>Merge Data and Plot</h2>
+                                            <p> 
+                                                Since there is a distance between the tof sensors and the center/axis origin of the robot, 
+                                                I need to use a homogeneous transformation matrix to process the data collected by the tof. 
+                                                According to the measurements, tof1 (front tof) is 12 cm from the center of the robot, and 
+                                                tof2 (left tof) is 9 cm from the center of the robot and is rotated 90 degrees clockwise 
+                                                by the z-axis of the robot's coordinate system.
+                                                So I need to multiply matrix 1 by tof1 and matrix 2 by tof2.
+                                                <br>
+                                                <b>TWO MATRIX AND FORMULA</b>
                                                 
                                             </p>
+                                            <p>Python Script Code</p>
                                             <p>
-                                                Thus, I can build the state space equation: <br>
-                                                <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/state_space_equation.png" />
+                                                Below is plots of the adjusted tof sensors data.
                                             </p>
-
-                                            <h2>Initialize Kalman Filter (Python)</h2>
+                                            <p>
+                                                I controlled the robot to rotate again in the same position and the collected data was 
+                                                displayed on the same plot in a different color.
+                                            </p>
+                                            <p>PLOT</p>
+                                            <p>The next polar plots show data collected by controlling the robot to rotate at five designated points in a static room in the lab.</p>
+                                            <p>Since I know the coordinates and distances of the specified points, I converted the robot coordinate system to the world coordinate system and plot.</p>
+                                            <h2>Line-Based Map</h2>
                                             <p> 
-                                                According to above value calculated, the matrix A, B, and C in the state space equation are <br>
-                                                <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/ABC.png" />
+                                                Based on the above plot, I drawn the following lines representing the obstacles and boundaries of the environment.
                                             </p>
-
-                                            <p> Thus, I initialize my Kalman filter in python as following: </p>
-                                            <script src="https://gist.github.com/LexLin004/d6e08f2692ec5784b9345d639aa7a8e9.js"></script>
-                                            <p> After discretize the matrices by using sampling time 110ms, the Ad and Bd are:  </p>
-                                            <script src="https://gist.github.com/LexLin004/940507c940cdd9510c16f806a10b3659.js"></script>
-                                            <p> The state vector 'x' and the noise covariance matrices of process and sensor are: </p>
-                                            <script src="https://gist.github.com/LexLin004/7b99cc623e3eeeacc907e065d9d74a44.js"></script>
-
-                                            <h2>Implement Kalman Filter</h2>
-                                            <p>Since the PWM, ToF, and Timing data received from Artemis via BLE are stored in a CSV by using the following code:</p>
-                                            <script src="https://gist.github.com/LexLin004/ac0bd887a473628f73e0bf4c2253d141.js"></script>
-                                            <p>I can re-read the data for the Kalman Filter.</p>
-                                            
-                                            <p>
-                                                I implemented my kalman filter using the code provided by instruction as the following.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/d5951e3677fb5f2a9288ea759fc42ec7.js"></script>
-
-                                            <p>For the following test on lab7 data, I set sigma1 to 20, sigma2 to 40, and sigma3 to 20. 
-                                                You can see that the kf_result deviates from the tof a bit, and becomes smooth. 
-                                                The reason for the deviation from tof is that I think the noise of the sensor is 20mm. 
-                                                I also balanced the values of sigma1 and sigma2 to make the prediction more realistic.
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab7_assets/Test_on_lab7data.png" />
-
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
