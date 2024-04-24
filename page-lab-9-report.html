@@ -178,7 +178,8 @@
                                                 struct 'DataPointTOF'. The 'dataPointTOF' contains the readings of tof1, the readings of tof2, the current angle, and the timestamp. 
                                                 The final array will be sent to the computer via BLE. My python script then splits the received array into tof1 and tof2 based on the
                                                 current angle, then remove the maximum and minimum values of each tof reading at the same angle and average the remaining values to 
-                                                form the final array: [(tof1_average, tof2_average, current_yaw), ...]. ...] .
+                                                form the final array: [(tof1_average, tof2_average, current_yaw), ...]. The tof1 represents the reading of the tof mounted on the 
+                                                left panel of the robot and the tof2 represents the reading of the tof mounted on the front panel of the robot. 
                                             </p>
                                             <h2>Code</h2>
                                             <p>
@@ -194,35 +195,63 @@
                                             <h3>Continuous Rotate Demo</h3>
                                             <p>Video</p>
                                             <p>Tof Data Demo</p>
+
                                             <p>Tof Data After Avg.</p>
                                         
                                             <h2>Merge Data and Plot</h2>
+                                            <p>The data plots collected through the method described in the ToF data colloection above are as follows, 
+                                                figure 1 is the raw data and figure 2 is the averaged data.</p>
+                                                <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/original_data_plot.png" />
+                                                <div class="small text-gray-500">Figure 1: polar corr. with raw data</div>
+                                                <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/averaged_data.png" />
+                                            <div class="small text-gray-500">Figure 3: polar corr. with averaged data</div>
+
                                             <p> 
                                                 Since there is a distance between the tof sensors and the center/axis origin of the robot, 
                                                 I need to use a homogeneous transformation matrix to process the data collected by the tof. 
                                                 According to the measurements, tof1 (front tof) is 12 cm from the center of the robot, and 
-                                                tof2 (left tof) is 9 cm from the center of the robot and is rotated 90 degrees clockwise 
+                                                tof2 (left tof) is 9 cm from the center of the robot and is rotated 90 degrees counter-clockwise 
                                                 by the z-axis of the robot's coordinate system.
-                                                So I need to multiply matrix 1 by tof1 and matrix 2 by tof2.
-                                                <br>
-                                                <b>TWO MATRIX AND FORMULA</b>
-                                                
+                                                So I did following to each tof1 and tof2:
                                             </p>
-                                            <p>Python Script Code</p>
-                                            <p>
-                                                Below is plots of the adjusted tof sensors data.
-                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/fa7d14d86c8ea9525b311f75759ad7d5.js"></script>
+
+                                            <p>With the transformed data, I plotted them on polar coordinates. The red x's are from tof2, the green x's are from tof1.</p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data.png" />
+                                            <div class="small text-gray-500">Figure 3: polar corr. with transformed data</div>
+                                            
                                             <p>
                                                 I controlled the robot to rotate again in the same position and the collected data was 
                                                 displayed on the same plot in a different color.
                                             </p>
                                             <p>PLOT</p>
                                             <p>The next polar plots show data collected by controlling the robot to rotate at five designated points in a static room in the lab.</p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
+                                            <div class="small text-gray-500">Figure 4: polar corr. with transformed data at position 1 (0,0)</div>
+                                            
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
+                                            <div class="small text-gray-500">Figure 5: polar corr. with transformed data at position 2 (0,0)</div>
+
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
+                                            <div class="small text-gray-500">Figure 6: polar corr. with transformed data at position 3 (0,0)</div>
+
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
+                                            <div class="small text-gray-500">Figure 7: polar corr. with transformed data at position 4 (0,0)</div>
+
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
+                                            <div class="small text-gray-500">Figure 8: polar corr. with transformed data at position 5 (0,0)</div>
+
                                             <p>Since I know the coordinates and distances of the specified points, I converted the robot coordinate system to the world coordinate system and plot.</p>
+
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/data_merged.png" />
+                                            <div class="small text-gray-500">Figure 9: Data merged</div>
+
                                             <h2>Line-Based Map</h2>
                                             <p> 
                                                 Based on the above plot, I drawn the following lines representing the obstacles and boundaries of the environment.
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/line_based_map.png" />
+                                            <div class="small text-gray-500">Figure 10: Line-based map</div>
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
