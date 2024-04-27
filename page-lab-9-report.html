@@ -189,22 +189,29 @@
                                             </p>
                                             <script src="https://gist.github.com/LexLin004/40815e1778463ea517c664ec997b0c90.js"></script>
 
-                                            <h3>Single Rotate Demo</h3>
-                                            <p>Video</p>
-                                            <p>Plot of motor input and yaw measured</p>
                                             <h3>Continuous Rotate Demo</h3>
-                                            <p>Video</p>
+                                            <p>
+                                                The following video demonstrates my implementation of controlling the car to rotate 360 degerees and to collect data using the above code.
+                                            </p>
+                                            <iframe width="560" height="315" src="https://youtube.com/embed/TXhIW0ocL3w"> </iframe>
                                             <p>Tof Data Demo</p>
+                                            <script src="https://gist.github.com/LexLin004/561baacd6d2e5b1fe45f7ddfd518e72e.js"></script>
 
-                                            <p>Tof Data After Avg.</p>
-                                        
                                             <h2>Merge Data and Plot</h2>
+                                            <p>Since I didn't have enough time to use the test environment in the lab, I set up the test environment shown below in another room, 
+                                                along with a 3d model measured and built using a Bosch laser rangefinder as ground truth.</p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/test_env.jpg" />
+                                            <div class="small text-gray-500">Figure 1: Test environment</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/test_env_fusion360.jpg" />
+                                            <div class="small text-gray-500">Figure 2: Test environment model</div>
+                                            
+                                            
                                             <p>The data plots collected through the method described in the ToF data colloection above are as follows, 
-                                                figure 1 is the raw data and figure 2 is the averaged data.</p>
+                                                figure 3 is the raw data and figure 4 is the averaged data.</p>
                                                 <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/original_data_plot.png" />
-                                                <div class="small text-gray-500">Figure 1: polar corr. with raw data</div>
+                                                <div class="small text-gray-500">Figure 3: polar corr. with raw data</div>
                                                 <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/averaged_data.png" />
-                                            <div class="small text-gray-500">Figure 3: polar corr. with averaged data</div>
+                                                <div class="small text-gray-500">Figure 4: polar corr. with averaged data</div>
 
                                             <p> 
                                                 Since there is a distance between the tof sensors and the center/axis origin of the robot, 
@@ -218,28 +225,32 @@
 
                                             <p>With the transformed data, I plotted them on polar coordinates. The red x's are from tof2, the green x's are from tof1.</p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data.png" />
-                                            <div class="small text-gray-500">Figure 3: polar corr. with transformed data</div>
+                                            <div class="small text-gray-500">Figure 5: polar corr. with transformed data</div>
                                             
                                             <p>
                                                 I controlled the robot to rotate again in the same position and the collected data was 
                                                 displayed on the same plot in a different color.
                                             </p>
                                             <p>PLOT</p>
-                                            <p>The next polar plots show data collected by controlling the robot to rotate at five designated points in a static room in the lab.</p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
-                                            <div class="small text-gray-500">Figure 4: polar corr. with transformed data at position 1 (0,0)</div>
+                                            <p>The next polar plots show data collected by controlling the robot to rotate at six designated points in a static room in the lab.</p>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point1_merge.png" />
+                                            <div class="small text-gray-500">Figure 6: polar corr. with transformed data at position 1 (0,0)</div>
                                             
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
-                                            <div class="small text-gray-500">Figure 5: polar corr. with transformed data at position 2 (0,0)</div>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point2_merge.png" />
+                                            <div class="small text-gray-500">Figure 7: polar corr. with transformed data at position 2 (0,0)</div>
 
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
-                                            <div class="small text-gray-500">Figure 6: polar corr. with transformed data at position 3 (0,0)</div>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point3_merge.png" />
+                                            <div class="small text-gray-500">Figure 8: polar corr. with transformed data at position 3 (0,0)</div>
 
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
-                                            <div class="small text-gray-500">Figure 7: polar corr. with transformed data at position 4 (0,0)</div>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point4_merge.png" />
+                                            <div class="small text-gray-500">Figure 9: polar corr. with transformed data at position 4 (0,0)</div>
 
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/robot_sensor_reading_avg_trans_data_at_pos1.png" />
-                                            <div class="small text-gray-500">Figure 8: polar corr. with transformed data at position 5 (0,0)</div>
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point5_merge.png" />
+                                            <div class="small text-gray-500">Figure 10: polar corr. with transformed data at position 5 (0,0)</div>
+
+                                            <img width=300 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/point6_merge.png" />
+                                            <div class="small text-gray-500">Figure 11: polar corr. with transformed data at position 6 (0,0)</div>
+
 
                                             <p>Since I know the coordinates and distances of the specified points, I converted the robot coordinate system to the world coordinate system and plot.</p>
 
