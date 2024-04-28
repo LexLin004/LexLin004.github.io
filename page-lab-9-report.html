@@ -252,10 +252,13 @@
                                             <div class="small text-gray-500">Figure 11: polar corr. with transformed data at position 6 (0,0)</div>
 
 
-                                            <p>Since I know the coordinates and distances of the specified points, I converted the robot coordinate system to the world coordinate system and plot.</p>
-
+                                            <p>Since I know the coordinates and distances of the specified points, I can convert the robot coordinate system to the world coordinate system and plot.</p>
+                                            <p>Since the transfromed data is in format [(array(tof1_x,tof1_y,1),array(tof2_x,tof2_y,1),yaw),...], I first converted it to the format of [(yaw, distance),...] for each tof.
+                                            Then, I converted it from robot coordinate system to world coordinate system by using following formula:</p>
+                                            <script src="https://gist.github.com/LexLin004/a9f5685fde5f1e68526b8801499ea403.js"></script>
+                                            <p>Finally, as shown below, I plotted the points obtained from the robot's measurements at 5 positions on a single plot.</p>
                                             <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab9_assets/merged_data.png" />
-                                            <div class="small text-gray-500">Figure 9: Data merged</div>
+                                            <div class="small text-gray-500">Figure 12: Data merged</div>
 
                                             <h2>Line-Based Map</h2>
                                             <p> 
