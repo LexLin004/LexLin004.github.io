@@ -163,26 +163,51 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Implementation of Bayes Filter</h2>
-                                            <h3>Compute Control</h3>
+                                            <h2>Bayes Filter Overview</h2>
                                             <p>
-                                                Explain
+
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/BayesFilterAlgo.png" />
+                                            <div class="small text-gray-500">Figure 1: Bayes Filter Algorithm (modified from lecture slides)</div>
+                                            
+                                            <h2>Implementation of Bayes Filter</h2>
+                                            <h3>Prediction Step</h3>
+                                            <h5> &emsp; - &emsp; Compute Control</h5>
+                                            <p>
+                                                To predict the pose of the robot, I need the the odometry motion model
+                                                , which needs the relative odometry motion of the robot.
+                                                The relative odometry motion is in the format 
+                                                (initial rotation 'delta_rot_1', translation 'delta_trans', final rotation 'delta_rot_2')
+                                                and can be computed from the previous pose(state) and the current pose(state) of the robot.
+                                                
+                                            </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/actual_control.png" />
+                                            <div class="small text-gray-500">Figure 2: Relative Odometry Motion (modified from lecture slides)</div>
                                             <script src="https://gist.github.com/LexLin004/38e32607d0929f2d287cbf1ed694a725.js"></script>
 
-                                            <h3>Odometry Motion Model in the Prediction Step</h3>
+                                            <h5> &emsp; - &emsp; Odometry Motion Model</h5>
                                             <p>
-                                                Explain
+                                                Then, the odometry motion model can be built to calculate how likely it is 
+                                                that the robot's state transitions from the previous pose to the current pose under the actual control actions.
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/odom_motion_model.png" />
+                                            <div class="small text-gray-500">Figure 3: Odometry Motion Model (modified from lab website)</div>
                                             <script src="https://gist.github.com/LexLin004/cf9f11b75822a58c791308d152c652be.js"></script>
 
-                                            <h3>Prediction Step</h3>
+                                            <h5> &emsp; - &emsp; Prediction Step</h5>
                                             <p>
-                                                Explain
+                                                Finally, the probability of the robot reaching each potential state can be calculated based on its previous
+                                                 state and control inputs. This requires two nested sets of loops, each with three loops iterating over
+                                                  the x, y, and theta dimensions of the previous and current states, respectively. To reduce the computation time,
+                                                  I omits states with a probability lower than 0.0001, as they have negligible impact. After prediction and update,
+                                                  the belief matrix is normalized to ensure that the sum of probabilities across all states equals 1.
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/PredictionStep.png" />
+                                            <div class="small text-gray-500">Figure 4: Prediction Step (modified from lecture slides)</div>
                                             <script src="https://gist.github.com/LexLin004/e3204a15b0a47b1e7065e06dd8275186.js"></script>
                                             
-                                            <h3>Sensor Model</h3>
+                                            <h3>Update Step</h3>
+                                            <h5>Sensor Model</h5>
                                             <p>
                                                 Explain
                                             </p>
