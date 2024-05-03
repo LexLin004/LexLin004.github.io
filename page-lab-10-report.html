@@ -209,14 +209,27 @@
                                             <h3>Update Step</h3>
                                             <h5>Sensor Model</h5>
                                             <p>
-                                                Explain
+                                                The filter next requires a sensor model to update the estimate of the robot state based on the sensor data.
+                                                The model aims to compute the probability of actual sensor observations and store these probabilities 
+                                                in a one-dimensional array with 18 elements. It utilizes the sensor noise variable and computes each 
+                                                probability using a Gaussian distribution.
                                             </p>
+                                            <img width=150 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/sensormodel.png" />
+                                            <div class="small text-gray-500">Figure 5: Sensor Model (modified from lab website)</div>
+                                            
                                             <script src="https://gist.github.com/LexLin004/a22fe8dd5276c629c254c43a731a646b.js"></script>
 
                                             <h3>Update Step</h3>
                                             <p>
-                                                Explain
+                                                The update step for the Bayesian filter is to adjust the belief matrix based on the robot's sensor 
+                                                readings. This involves examining each cell in the grid and calculating the likelihood that the robot 
+                                                is located in that cell based on the sensor data. After calculating the likelihood of each cell, 
+                                                the belief matrix is updated accordingly. Finally, the matrix is normalized to ensure that the 
+                                                total probability of all cells is equal to 1, thus ensuring that it remains a valid probability 
+                                                distribution.
                                             </p>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/updatestep.png" />
+                                            <div class="small text-gray-500">Figure 6: Update Step (modified from lab website)</div>
                                             <script src="https://gist.github.com/LexLin004/b10dfa45233ad06b21866f4e6f28319a.js"></script>
 
                                             <h2>Demo</h2>
