@@ -153,7 +153,7 @@
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Apr 16, 2024</div>
+                                                    <div class="single-post-meta-details-date">Apr 28, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -163,65 +163,43 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Control</h2>
-                                            <p> 
-                                                Because the tof would report an error output if it was taking a reading when its distance from the object varied too much,
-                                                 I chose to use method two, Orientation control.
-                                                 In this method, I used a PID controller to control the robot to rotate 10 degrees and then come to a standstill, 
-                                                 then measured the data 10 times using sensors mounted on the front and left side of the robot, and repeated 36 times.
-                                            </p>
-                                            
-                                            <h2>ToF Data Collection</h2>
+                                            <h2>Implementation of Bayes Filter</h2>
+                                            <h3>Compute Control</h3>
                                             <p>
-                                                The program controls the ToF sensor to collect data 10 times while the robot is stationary at an angle and stores them in an array as 
-                                                struct 'DataPointTOF'. The 'dataPointTOF' contains the readings of tof1, the readings of tof2, the current angle, and the timestamp. 
-                                                The final array will be sent to the computer via BLE. My python script then splits the received array into tof1 and tof2 based on the
-                                                current angle, then remove the maximum and minimum values of each tof reading at the same angle and average the remaining values to 
-                                                form the final array: [(tof1_average, tof2_average, current_yaw), ...]. ...] .
+                                                Explain
                                             </p>
-                                            <h2>Code</h2>
-                                            <p>
-                                                I use two commands: set_pid_imu and rotate_a_circle. The set_pid_imu allows me to easily adjust the parameters of the pid controller,
-                                                and the length of time for each rotation of 10 degrees to be performed. The rotate_a_circle controls the behavior of the robot as 
-                                                it starts to rotate 36 times through 10 degrees and collects tof readings, and returns the collected tof data via Bluetooth.
-                                            </p>
-                                            <script src="https://gist.github.com/LexLin004/40815e1778463ea517c664ec997b0c90.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/38e32607d0929f2d287cbf1ed694a725.js"></script>
 
-                                            <h3>Single Rotate Demo</h3>
-                                            <p>Video</p>
-                                            <p>Plot of motor input and yaw measured</p>
-                                            <h3>Continuous Rotate Demo</h3>
-                                            <p>Video</p>
-                                            <p>Tof Data Demo</p>
-                                            <p>Tof Data After Avg.</p>
-                                        
-                                            <h2>Merge Data and Plot</h2>
-                                            <p> 
-                                                Since there is a distance between the tof sensors and the center/axis origin of the robot, 
-                                                I need to use a homogeneous transformation matrix to process the data collected by the tof. 
-                                                According to the measurements, tof1 (front tof) is 12 cm from the center of the robot, and 
-                                                tof2 (left tof) is 9 cm from the center of the robot and is rotated 90 degrees clockwise 
-                                                by the z-axis of the robot's coordinate system.
-                                                So I need to multiply matrix 1 by tof1 and matrix 2 by tof2.
-                                                <br>
-                                                <b>TWO MATRIX AND FORMULA</b>
-                                                
-                                            </p>
-                                            <p>Python Script Code</p>
+                                            <h3>Odometry Motion Model in the Prediction Step</h3>
                                             <p>
-                                                Below is plots of the adjusted tof sensors data.
+                                                Explain
                                             </p>
+                                            <script src="https://gist.github.com/LexLin004/cf9f11b75822a58c791308d152c652be.js"></script>
+
+                                            <h3>Prediction Step</h3>
                                             <p>
-                                                I controlled the robot to rotate again in the same position and the collected data was 
-                                                displayed on the same plot in a different color.
+                                                Explain
                                             </p>
-                                            <p>PLOT</p>
-                                            <p>The next polar plots show data collected by controlling the robot to rotate at five designated points in a static room in the lab.</p>
-                                            <p>Since I know the coordinates and distances of the specified points, I converted the robot coordinate system to the world coordinate system and plot.</p>
-                                            <h2>Line-Based Map</h2>
-                                            <p> 
-                                                Based on the above plot, I drawn the following lines representing the obstacles and boundaries of the environment.
+                                            <script src="https://gist.github.com/LexLin004/e3204a15b0a47b1e7065e06dd8275186.js"></script>
+                                            
+                                            <h3>Sensor Model</h3>
+                                            <p>
+                                                Explain
                                             </p>
+                                            <script src="https://gist.github.com/LexLin004/a22fe8dd5276c629c254c43a731a646b.js"></script>
+
+                                            <h3>Update Step</h3>
+                                            <p>
+                                                Explain
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/b10dfa45233ad06b21866f4e6f28319a.js"></script>
+
+                                            <h2>Demo</h2>
+
+                                            <h2>Discussion</h2>
+                                            
+
+                                            
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
