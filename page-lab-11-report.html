@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Lab 10 Fast Robot - Shihming Lin</title>
+        <title>Lab 11 Fast Robot - Shihming Lin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/project-cover/right_corner_icon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
@@ -145,15 +145,16 @@
                             <div class="row gx-5 justify-content-center">
                                 <div class="col-lg-10 col-xl-8">
                                     <div class="single-post">
-                                        <h1>Lab 10 report (Grid Localization using Bayes Filter)</h1>
-                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab10.html">lab</a>,
-                                             I use Bayes filter to implement grid localization.
+                                        <h1>Lab 11 report (Localization on the real robot)</h1>
+                                        <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab11.html">lab</a>,
+                                            In this experiment, I use Bayes filter for localization on an actual robot, in which I only use
+                                            the update step based on a full 360-degree scan of the ToF sensor.
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">Apr 28, 2024</div>
+                                                    <div class="single-post-meta-details-date">May 06, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -163,13 +164,17 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Bayes Filter Overview</h2>
+                                            <h2>Test Localization in Simulation</h2>
                                             <p>
-
+                                                First, I run the given code to test the localization in simulation. The following
+                                                figure shows the result, which contains odom, ground truth, and beliefs.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/BayesFilterAlgo.png" />
-                                            <div class="small text-gray-500">Figure 1: Bayes Filter Algorithm (modified from lecture slides)</div>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_in_sim.png" />
+                                            <div class="small text-gray-500">Figure 1: Localization in Simulation</div>
                                             
+                                            <h2>Test Localization in Real World</h2>
+                                            <p>Since </p>
+
                                             <h2>Implementation of Bayes Filter</h2>
                                             <h3>Prediction Step</h3>
                                             <h5> &emsp; - &emsp; Compute Control</h5>
