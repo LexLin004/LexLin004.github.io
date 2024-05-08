@@ -173,80 +173,43 @@
                                             <div class="small text-gray-500">Figure 1: Localization in Simulation</div>
                                             
                                             <h2>Test Localization in Real World</h2>
-                                            <p>Since </p>
-
-                                            <h2>Implementation of Bayes Filter</h2>
-                                            <h3>Prediction Step</h3>
-                                            <h5> &emsp; - &emsp; Compute Control</h5>
                                             <p>
-                                                To predict the pose of the robot, I need the the odometry motion model
-                                                , which needs the relative odometry motion of the robot.
-                                                The relative odometry motion is in the format 
-                                                (initial rotation 'delta_rot_1', translation 'delta_trans', final rotation 'delta_rot_2')
-                                                and can be computed from the previous pose(state) and the current pose(state) of the robot.
-                                                
+                                                Since I need to use the sensor measurements to run the update step, I first need to control the robot to 
+                                                rotate 360 degrees and collect sensor measurements every 20 degrees so that I will collect a total of 18 
+                                                data from the front sensors. Thus, I made the following changes to "perform_observation_loop":
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/actual_control.png" />
-                                            <div class="small text-gray-500">Figure 2: Relative Odometry Motion (modified from lecture slides)</div>
-                                            <script src="https://gist.github.com/LexLin004/38e32607d0929f2d287cbf1ed694a725.js"></script>
-
-                                            <h5> &emsp; - &emsp; Odometry Motion Model</h5>
-                                            <p>
-                                                Then, the odometry motion model can be built to calculate how likely it is 
-                                                that the robot's state transitions from the previous pose to the current pose under the actual control actions.
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/odom_motion_model.png" />
-                                            <div class="small text-gray-500">Figure 3: Odometry Motion Model (modified from lab website)</div>
-                                            <script src="https://gist.github.com/LexLin004/cf9f11b75822a58c791308d152c652be.js"></script>
-
-                                            <h5> &emsp; - &emsp; Prediction Step</h5>
-                                            <p>
-                                                Finally, the probability of the robot reaching each potential state can be calculated based on its previous
-                                                 state and control inputs. This requires two nested sets of loops, each with three loops iterating over
-                                                  the x, y, and theta dimensions of the previous and current states, respectively. To reduce the computation time,
-                                                  I omits states with a probability lower than 0.0001, as they have negligible impact. After prediction and update,
-                                                  the belief matrix is normalized to ensure that the sum of probabilities across all states equals 1.
-                                            </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/PredictionStep.png" />
-                                            <div class="small text-gray-500">Figure 4: Prediction Step (modified from lecture slides)</div>
-                                            <script src="https://gist.github.com/LexLin004/e3204a15b0a47b1e7065e06dd8275186.js"></script>
+                                            <script src="https://gist.github.com/LexLin004/22946612d5102df3bb5271692da54daf.js"></script>
+                                            <h4>Rotate and Measure Demo</h4>
                                             
-                                            <h3>Update Step</h3>
-                                            <h5>Sensor Model</h5>
-                                            <p>
-                                                The filter next requires a sensor model to update the estimate of the robot state based on the sensor data.
-                                                The model aims to compute the probability of actual sensor observations and store these probabilities 
-                                                in a one-dimensional array with 18 elements. It utilizes the sensor noise variable and computes each 
-                                                probability using a Gaussian distribution.
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/6S049P0UKYM"></iframe>
+                                            <h3>Result</h3>
+                                            <p>I then places the robot in the right lower corner marked point in the lab, and use the update step . The 
+                                                plot below shows the result. The blue point is the real poses, and the green point is the ground truth.
+                                                The  errors are 0.0004 meters, −0.0004 meters, and 90 degrees. Euclidean distance is 0.00057m. The reason
+                                                for the yaw error may be that I oriented the robot towards the window, which does not align with the 
+                                                the direction of 0 degree of the ground truth.
                                             </p>
-                                            <img width=150 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/sensormodel.png" />
-                                            <div class="small text-gray-500">Figure 5: Sensor Model (modified from lab website)</div>
-                                            
-                                            <script src="https://gist.github.com/LexLin004/a22fe8dd5276c629c254c43a731a646b.js"></script>
-
-                                            <h3>Update Step</h3>
-                                            <p>
-                                                The update step for the Bayesian filter is to adjust the belief matrix based on the robot's sensor 
-                                                readings. This involves examining each cell in the grid and calculating the likelihood that the robot 
-                                                is located in that cell based on the sensor data. After calculating the likelihood of each cell, 
-                                                the belief matrix is updated accordingly. Finally, the matrix is normalized to ensure that the 
-                                                total probability of all cells is equal to 1, thus ensuring that it remains a valid probability 
-                                                distribution.
+                                            <img width=700 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_n3n2d0.png" />
+                                            <div class="small text-gray-500">Figure 2: Test at poses (-3ft, -2ft, 0 deg)</div>
+                                            <p>I also test in the other poses.</p>
+                                            <p>For pose (0 ft,3 ft, 0 deg), the errors are -0.305 meters, -0.3044 meters, and 110 degrees.
+                                                Euclidean distance is 0.43091108131492745m.
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab10_assets/updatestep.png" />
-                                            <div class="small text-gray-500">Figure 6: Update Step (modified from lab website)</div>
-                                            <script src="https://gist.github.com/LexLin004/b10dfa45233ad06b21866f4e6f28319a.js"></script>
+                                            <img width=700 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_n0n3d0.png" />
+                                            <div class="small text-gray-500">Figure 3: Test at poses (0ft, 3ft, 0 deg)</div>
+                                            <p>The following are test at the other 2 poses. </p>
+                                            <img width=400 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_p5p3d0.png" />
+                                            <div class="small text-gray-500">Figure 4: Test at poses (5ft, 3ft, 0 deg)</div>
 
-                                            <h2>Demo</h2>
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/a0IDPcKWdOs?si=woSPIf7ypnHzyenK"></iframe>
-                                            <h2>Discussion</h2>
-                                            <p>In the video, the blue line represents "beliefs" which is the most likely state after each iteration 
-                                                of the Bayes Filter, the green line represents "ground truth", 
-                                                and the red line represents "measurements".
-                                                You can see that the blue line follows the red line in most cases, only when the robot moves 
-                                                a short distance, the updated position will be inaccurate because we only split the map into large grids.
+                                            <img width=400 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_p5n3d0.png" />
+                                            <div class="small text-gray-500">Figure 5: Test at poses (5ft, -3ft, 0 deg)</div>
+
+                                            <h3>Discussion</h3>
+                                            <p> The accuracy is highest at the test points (-3ft, -2ft, 0 deg) and (5ft, -3ft, 0 deg).
+                                                I think this is because at these two Poses, the tof readings of the robot are more accurate, 
+                                                because at these two points, the angle of the tof light and the wall is closer to 90 degrees.
+                                                When the angle is not 90 degrees, the angle will not produce much error because the robot is close to the wall.
                                             </p>
-
                                             
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
