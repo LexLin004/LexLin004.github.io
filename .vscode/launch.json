@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/18072/Desktop",
-      "program": "c:/Users/18072/Desktop/build/Debug/outDebug",
+      "cwd": "c:/Users/18072/Desktop/学校文件",
+      "program": "c:/Users/18072/Desktop/学校文件/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
