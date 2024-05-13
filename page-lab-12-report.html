@@ -147,14 +147,14 @@
                                     <div class="single-post">
                                         <h1>Lab 12 report (Path Planning and Execution)</h1>
                                         <p class="lead">In this <a href="https://fastrobotscornell.github.io/FastRobots/labs/Lab12.html">lab</a>,
-                                            In this experiment, I try to make the robot navigate through a set of waypoints in the lab environment
-                                             as quickly and accurately as possible.
+                                            In this experiment, In that experiment, I made the robot navigate through a set of waypoints in the 
+                                            lab environment both quickly and accurately.
                                         <div class="d-flex align-items-center justify-content-between mb-5">
                                             <div class="single-post-meta me-4">
                                                 <img class="single-post-meta-img" src="assets/img/project-cover/right_corner_icon.png" />
                                                 <div class="single-post-meta-details">
                                                     <div class="single-post-meta-details-name">Shihming Lin</div>
-                                                    <div class="single-post-meta-details-date">May 06, 2024</div>
+                                                    <div class="single-post-meta-details-date">May 12, 2024</div>
                                                 </div>
                                             </div>
                                             <div class="single-post-meta-links">
@@ -164,53 +164,104 @@
                                             </div>
                                         </div>
                                         <div class="single-post-text my-5">
-                                            <h2>Test Localization in Simulation</h2>
+                                            <h2>Path Planning</h2>
                                             <p>
-                                                First, I run the given code to test the localization in simulation. The following
-                                                figure shows the result, which contains odom, ground truth, and beliefs.
+                                                The task is to quickly and accurately pass through a set of waypoints in a known map. 
+                                                As shown, the blue lines are walls and obstacles, starting at (-1.2192, -0.9144) in the 
+                                                lower left corner and ending at (0, 0).
                                             </p>
-                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_in_sim.png" />
-                                            <div class="small text-gray-500">Figure 1: Localization in Simulation</div>
-                                            
-                                            <h2>Test Localization in Real World</h2>
+                                            <img width=500 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab12_assets/map_and_path.png" />
+                                            <div class="small text-gray-500">Figure 1: Map and Path</div>
                                             <p>
-                                                Since I need to use the sensor measurements to run the update step, I first need to control the robot to 
-                                                rotate 360 degrees and collect sensor measurements every 20 degrees so that I will collect a total of 18 
-                                                data from the front sensors. Thus, I made the following changes to "perform_observation_loop":
+                                                My planning steps are as follows: <br>
+                                                1.&emsp;Set the 0 degree reference direction to the direction the robot will be facing when it starts, 
+                                                and the counterclockwise direction to the positive direction. 
+                                                I will place the robot in the map + y direction. <br><br>
+                                                2.&emsp;For each target waypoint perform the following steps: <br>
+                                                    &emsp; - &emsp;2.1 &emsp; Update the current robot position using lab11's localization code. <br>
+                                                    &emsp; - &emsp;2.2 &emsp;Calculate the deviation of the vector of the current position and the target point from the 0 degree reference direction,
+                                                    and use the PID rotate controller to control the robot to rotate to that deviation.
+                                                    Since I used DMP combined with quaternions to calculate the angle, the angle returned by the robot is plausible.
+                                                    After testing, the angle error margin was +-1 degree for 20 minutes at rest and +-2 degrees after multiple rotations.
+                                                    <br>
+                                                    &emsp; - &emsp;2.3 &emsp;After the robot has rotated to the specified angle, set the setpoint to the distance that the ToF sensor will measure at the target point, facing the current angle. 
+                                                    <br>
+                                                    &emsp; - &emsp;2.4 &emsp;Send this setpoint to the robot and use the pid_distance_controller to control the robot to move toward wall
+                                                    <br>
+                                                    &emsp; - &emsp;2.5 &emsp;Reach the specified distance and go to the next cycle.
                                             </p>
-                                            <script src="https://gist.github.com/LexLin004/22946612d5102df3bb5271692da54daf.js"></script>
-                                            <h4>Rotate and Measure Demo</h4>
+                                        
+                                            <h3>Functions Implemented by Computer</h3>
+                                            <h5>Update the Current Robot Position</h5>
+                                            <p>
+                                                I used code implemented in lab11 to control the robot to rotate in place. 
+                                                The robot uses the front ToF sensor to measure every 20 degrees and employs a Bayesian filter to update its position.
+                                            </p>
+                                            <h5>Angle for Robot Rotation</h5>
+                                            <p>In lab6, I implemented the functionality to control the robot to rotate to a specified angle using absolute angle control. 
+                                                The robot's target rotation angle is set based on a fixed reference direction (initial direction), rather than relative to its current position. 
+                                                For example, if my initial direction is the +y direction, then entering 90 degrees will cause the robot to rotate to the -x direction. 
+                                                Entering 90 degrees again will still point the robot to the -x direction. It is only when an angle of 180 degrees is entered that the robot will rotate to the -y direction. 
+                                                Therefore, to control the robot to rotate to face the next waypoint, I just need to calculate the deviation between the line connecting the current position to the target 
+                                                point and the initial direction, and then pass this value to the robot.
+                                                The following is the code implementation:
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/b6fa8f43fa746c65d13a6c2962c995eb.js"></script>
+
+                                            <h5>Distances for Robot Movement</h5>
+                                            <p>
+                                                In lab5, I implemented the functionality that allows the robot to move to a set_point given relative to a wall. 
+                                                For example, when the set_point is 30 cm, the PID controller will control the robot to move to a position 30 cm away from the wall. 
+                                                In this lab, I can use this functionality to control the robot to move to waypoints with high precision.
+                                                I choose to compute the set point on the computer and then send it to the robot.
+                                                Set point depends on the angle of the robot when it reaches the target waypoint, and the position of the waypoint.
+                                                I assume that the robot can move in a straight line, therefore, the angle at departure is the angle upon reaching the target point.
+                                                I generate a vector at the target point facing the current direction, calculate the intersections of this vector with all obstacles, 
+                                                store the closest intersection obtained, and calculate the distance from the intersection to the target point. This is the setpoint. 
+                                                This method is similar to a radar simulation. Code and example are as follows:
+                                            </p>
+                                            <script src="https://gist.github.com/LexLin004/cb61b034fb8d3695e379e49ba0340292.js"></script>
+                                            <img width=700 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab12_assets/bothinone.png" />
+                                            <div class="small text-gray-500">
+                                                Figure 2a: Radar Simulation 5deg at pos(0.3048, -0.3048) when robot faces 270deg <br>
+                                                Figure 2b: Radar Simulation 360deg at pos(0.3048, -0.3048)
+                                            </div>
+
+                                            <h5>Robustness Discussion</h5>
+                                            <p>I understand that the robot may not be able to accurately reach the set point. Therefore, after the robot goes 
+                                                through the steps above and arrives at the setpoint, its position will be updated again. If the distance 
+                                                is greater than 30 cm (considering the difficulty in precisely adjusting the robot's position and localization errors) 
+                                                and less than 1 meter (considering that localization may produce outrageously wrong results), the above steps will be 
+                                                repeated to approach the waypoint more closely. The code is shown below. <br>
+                                                This planning will be limited by whether the robot can travel in a 
+                                                straight line, the accuracy of the robot's localization, and the precision of the ToF measurements.
+                                            </p>
+
+                                            <script src="https://gist.github.com/LexLin004/b2b042d99b10b70b0877210a24a58e1c.js"></script>
+                                            <h3>Functions Implemented by Robot</h3>
+                                            <h5>Rotate and Measure</h5>
+                                            <p>
+                                                After receiving a command from the computer to locate itself, 
+                                                the robot will perform rotation and measurement functions, with the code being the same as in lab11.
+                                            </p>
+                                            <h5>Rotate to target angle</h5>
+                                            <p>
+                                                After receiving a command from the computer to rotate to a specified angle, the robot will perform 
+                                                the rotation function, with the code being the same as in lab11 and lab6. 
+                                            </p>
+                                            <h5>Move to setpoint</h5>
+                                            <p>
+                                                After receiving a command from the computer to move forward to a set_point, the robot will perform
+                                                the forward movement function, with the code being the same as in lab5.
+                                            </p>
                                             
+                                            <h2>Demo</h2>
                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/6S049P0UKYM"></iframe>
-                                            <h3>Result</h3>
-                                            <p>I then places the robot in the right lower corner marked point in the lab, and use the update step . The 
-                                                plot below shows the result. The blue point is the real poses, and the green point is the ground truth.
-                                                The  errors are 0.0004 meters, −0.0004 meters, and 90 degrees. Euclidean distance is 0.00057m. The reason
-                                                for the yaw error may be that I oriented the robot towards the window, which does not align with the 
-                                                the direction of 0 degree of the ground truth.
-                                            </p>
-                                            <img width=700 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_n3n2d0.png" />
-                                            <div class="small text-gray-500">Figure 2: Test at poses (-3ft, -2ft, 0 deg)</div>
-                                            <p>I also test in the other poses.</p>
-                                            <p>For pose (0 ft,3 ft, 0 deg), the errors are -0.305 meters, -0.3044 meters, and 110 degrees.
-                                                Euclidean distance is 0.43091108131492745m.
-                                            </p>
-                                            <img width=700 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_n0n3d0.png" />
-                                            <div class="small text-gray-500">Figure 3: Test at poses (0ft, 3ft, 0 deg)</div>
-                                            <p>The following are test at the other 2 poses. </p>
-                                            <img width=400 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_p5p3d0.png" />
-                                            <div class="small text-gray-500">Figure 4: Test at poses (5ft, 3ft, 0 deg)</div>
-
-                                            <img width=400 class="img-fluid mb-2 rounded" src="assets/img/lab_assets/lab11_assets/lab11_test_p5n3d0.png" />
-                                            <div class="small text-gray-500">Figure 5: Test at poses (5ft, -3ft, 0 deg)</div>
-
-                                            <h3>Discussion</h3>
-                                            <p> The accuracy is highest at the test points (-3ft, -2ft, 0 deg) and (5ft, -3ft, 0 deg).
-                                                I think this is because at these two Poses, the tof readings of the robot are more accurate, 
-                                                because at these two points, the angle of the tof light and the wall is closer to 90 degrees.
-                                                When the angle is not 90 degrees, the angle will not produce much error because the robot is close to the wall.
-                                            </p>
                                             
+                                            <h3>Result</h3>
+                                            <h4>Bayer Filter Result</h4>
+                                            <h4>Real World Result</h4>
+
                                             <hr class="my-5" />
                                             <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
                                         </div>
