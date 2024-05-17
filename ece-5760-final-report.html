@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Final Report - ECE 5760</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="assets/5760assets/FPGA.webp" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="layoutDefault">
+            <div id="layoutDefault_content">
+                <main>
+                    <!-- Navbar-->
+                    <nav class="navbar navbar-marketing navbar-expand-lg bg-white navbar-light">
+                        <div class="container px-5">
+                            <a class="navbar-brand text-primary" href="#!"><img class="img-fluid rounded-3" src="assets/5760assets/FPGA.webp" /></a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav ms-auto me-lg-5">
+                                    <li class="nav-item"><a class="nav-link" href="ece-5760-final-code.html">Code</a></li>
+                                </ul>
+                                <a class="btn fw-500 ms-lg-4 btn-primary" href="5760-final-project-main-page.html">
+                                    Back
+                                    <i class="ms-2" data-feather="arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                    <section class="bg-light py-10">
+                        <div class="container px-5">
+                            <div class="row gx-5 justify-content-center">
+                                <div class="col-lg-10 col-xl-8">
+                                    <div class="single-post">
+                                        <img width="800" class="img-fluid mb-2 rounded" src="assets/5760assets/5760fp.png" />
+                                        <h1>Parameterizable Convolution Accelerator Design</h1>
+                                        <p class="lead">
+                                            This project focuses on developing a highly parallel, plug-and-play 
+                                            convolutional layer module that allows for parameterized configuration of input channels, 
+                                            output channels, and feature map sizes.
+                                        </p>
+                                        <div class="d-flex align-items-center justify-content-between mb-5">
+                                            <div class="single-post-meta me-4">
+                                                <img class="single-post-meta-img" src="assets/5760assets/author.webp" />
+                                                <div class="single-post-meta-details">
+                                                    <div class="single-post-meta-details-name">Yibin Xu, Junze Zhou, Shihming Lin</div>
+                                                    <div class="single-post-meta-details-date">May 16, 2024</div>
+                                                </div>
+                                            </div>
+                                            <div class="single-post-meta-links">
+                                            </div>
+                                        </div>
+                                        <div class="single-post-text my-5">
+                                            <h2>Overview</h2>
+                                            <p>
+                                                Convolution Neural Network(CNN) is widely used in image processing applications like classification 
+                                                and object recognition. Many of these applications employed a CNN as their backbone where multiple 
+                                                convolution layers were stacked together. Sometimes even a single convolution layer can be used to
+                                                 extract some specific information about the image like color, texture, edge, etc. Strong parallel 
+                                                 computing capability and relatively low power consumption make FPGA a popular platform for deploying 
+                                                 CNN. So, instead of implementing a complete CNN model on the FPGA toward some specific applications, 
+                                                 our project focuses on implementing a highly parallelized microarchitecture that is specifically 
+                                                 designed for the inference of the convolution layers with some relevant parameters of a CNN layer 
+                                                 can be configured. On the DE1-Soc board, FPGA is responsible for CNN inference and HPS takes care
+                                                  of controlling and scheduling the inference procedure on FPGA and feeding input feature maps and 
+                                                  weights to FPGA. 
+
+                                            </p>
+                                            <h2>Background Math</h2>
+                                            <p>
+                                                As shown in Figure 1, a typical CNN layer is mainly composed of convolution operation, activation 
+                                                function, and pooling operation. 
+                                            </p>
+                                            <img  class="img-fluid mb-2 rounded" src="assets/5760assets/figure_1.png" />
+                                            <div class="small text-gray-500">Figure 1: Typical Convolution Layer Structure [1]</div>
+                                            
+                                            <p>
+                                                <br>
+                                                The convolution operation is the most important step in the CNN layer shown in Figure 2. The 
+                                                size of output feature maps O*O is relevant to many parameters of one single convolution layer, 
+                                                including the number of input channels N, the number of output channels M, the size of the input 
+                                                feature map L*L, the size of the convolution kernel K*K, the number of padding P and convolution 
+                                                stride S. Using the above representation, the convolution layer follows the below equation:
+                                            </p>
+                                            
+                                            <p>公式</p>
+                                            
+                                            <p>
+                                                In many cases, the size of the convolution kernel is 3*3, the stride of convolution is 1, and P will be set to 1 in order to keep 
+                                                the size of the output feature map unchanged.
+                                            </p>
+
+                                            <img width="400" class="img-fluid mb-2 rounded" src="assets/5760assets/figure2.gif" />
+                                            <div class="small text-gray-500">Figure 2: Convolution operation [2]</div>
+                                            
+                                            <p>
+                                                There are mainly two kinds of pooling methods for pooling operation: max pooling and average pooling. Max pooling is relatively
+                                                 more widely used than average pooling to reduce the spatial dimensions of feature maps and make the network more invariant 
+                                                 to small translations in the input data. In max pooling, a sliding window (or pooling window) moves over the input feature map, 
+                                                 and for each position of the window, the maximum value within the window is taken as the output. As shown in Figure 3, the 
+                                                 pooling operation can actually be considered as a special case of convolution operation with a stride of 2 and no padding, so 
+                                                 the output feature map will decrease by half.
+                                            </p>
+
+                                            <img width="400" class="img-fluid mb-2 rounded" src="assets/5760assets/maxpool.gif" />
+                                            <div class="small text-gray-500">Figure 3: Max Pooling Operation [3]</div>
+
+                                            <p>
+                                                An activation function in a neural network is a non-linear function applied to the output of each neuron. The primary purpose of 
+                                                the activation function is to introduce non-linearity into the model, allowing the network to learn and model complex patterns 
+                                                in the data. The Rectified Linear Unit (ReLU) is one of the most commonly used activation functions in neural networks, especially 
+                                                in CNN and it’s also very popular in deploying CNN on embedded systems owing to its simplicity. The ReLU function is defined as:
+                                            </p>
+
+                                            <p>公式</p>
+
+                                            <p>
+                                                When implementing a CNN layer on the FPGA, some extra steps need to be introduced, like the quantization module where we converted 
+                                                the data representation from 32-bit floating point to the 8-bit integer and adjusted the pixel of feature maps to keep relatively 
+                                                high precision with low resource utilization. Specifically, we implemented the post-training static quantization(PTSQ). As Figure 
+                                                4 exhibits, by scaling and shifting, PTSQ allows us to map the original data range to (0, 255), making it more feasible to deploy 
+                                                CNN on FPGA because of lower resources to represent data.
+                                            </p>
+
+                                            <img width="400" class="img-fluid mb-2 rounded" src="assets/5760assets/figure_4.png" />
+                                            <div class="small text-gray-500">Figure 4: PTSQ <br> (source: https://www.mlsys.ai/papers/gptq.html)</div>
+
+
+                                            <iframe width="270" height="480" src="https://youtube.com/embed/ouwsdcDJQVo?feature=share"> </iframe>
+                                            
+                                            <hr class="my-5" />
+                                            <div class="text-center"><a class="btn btn-transparent-dark" href="fast-robot-all-project-main-page.html">Back to All Reports of Fast Robots Labs</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="svg-border-rounded text-dark">
+                            <!-- Rounded SVG Border-->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+                        </div>
+                    </section>
+                </main>
+            </div>
+<div id="layoutDefault_footer">
+                <footer class="footer pt-10 pb-5 mt-auto bg-dark footer-dark">
+                    <div class="container px-5">
+                        <div class="row gx-5">
+                            <div class="col-lg-3">
+                                <div class="footer-brand">Shihming Lin</div>
+                                <div class="mb-3">Portfolio</div>
+                                <div class="icon-list-social mb-5">
+                                    <a class="icon-list-social-link" href="#!"><i class="fab fa-instagram"></i></a>
+                                    <a class="icon-list-social-link" href="#!"><i class="fab fa-facebook"></i></a>
+                                    <a class="icon-list-social-link" href="#!"><i class="fab fa-github"></i></a>
+                                    <a class="icon-list-social-link" href="#!"><i class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="row gx-5">
+                                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                                        <div class="text-uppercase-expanded text-xs mb-4">All Info</div>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-2"><a href="#!">Projects</a></li>
+                                            <li class="mb-2"><a href="#!">Personal</a></li>
+                                            <li class="mb-2"><a href="#!">Documentation</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="text-uppercase-expanded text-xs mb-4">Legal</div>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-2"><a href="#!">Privacy Policy</a></li>
+                                            <li class="mb-2"><a href="#!">Terms and Conditions</a></li>
+                                            <li><a href="#!">License</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-5" />
+                        <div class="row gx-5 align-items-center">
+                            <div class="col-md-6 small">Copyright &copy; LexLin004.github.io 2024</div>
+                            <div class="col-md-6 text-md-end small">
+                                <a href="#!">Privacy Policy</a>
+                                &middot;
+                                <a href="#!">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
